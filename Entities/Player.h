@@ -1,20 +1,17 @@
-//
-// Created by david on 06/04/24.
-//
-
 #ifndef ARNOLD_PLAYER_H
 #define ARNOLD_PLAYER_H
 
 #include <SDL2/SDL.h>
 #include <cstdio>
 #include "Entity.h"
+#include "../Game.h"
 
 #define MOVE_AMOUNT 1
 
 class Player : public Entity {
 public:
-    Player(float x, float y, int id) : Entity(x, y, id) {
-        dimensions_ = {20, 20};
+    Player(float _x, float _y, Game *_game, int _id) : Entity(_x, _y, _game, _id) {
+        dimensions = {20, 20};
     }
 
     bool isMoving = false;
@@ -26,7 +23,6 @@ public:
     void render(SDL_Renderer *renderer) override;
 
     void update(double deltaTime) override;
-
 };
 
 

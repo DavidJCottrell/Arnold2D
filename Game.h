@@ -1,7 +1,3 @@
-//
-// Created by david on 06/04/24.
-//
-
 #ifndef ARNOLD_GAME_H
 #define ARNOLD_GAME_H
 
@@ -10,9 +6,12 @@
 #include <vector>
 #include <iostream>
 #include <memory>
-#include "Enemy.h"
-#include "Player.h"
 #include "Constants.h"
+
+class Entity;
+
+#include "Entities/Entity.h"
+
 
 class Game {
 public:
@@ -30,19 +29,27 @@ public:
 
     void clean();
 
+    template<typename T>
+    void addEntity(T entity) {
+        static_assert(std::is_base_of<Entity, T>::value, "entity_class must be derived from Entity");
+        entities.push_back(
+                std::make_unique<T>(
+                        entity.coordinates.x,
+                        entity.coordinates.y,
+                        entity.game,
+                        entities.size()
+                ));
+    }
+
     [[nodiscard]] bool getIsRunning() const { return isRunning; }
 
 private:
     Uint32 lastFrameTime = 0;
     bool isRunning = false;
 
-    template<typename T>
-    void addEntity(T entity);
-
     SDL_Window *window{};
     SDL_Renderer *renderer{};
     std::vector<std::unique_ptr<Entity>> entities;
-    SDL_Event sdlEvent;
 };
 
 

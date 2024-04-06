@@ -1,7 +1,3 @@
-//
-// Created by david on 06/04/24.
-//
-
 #ifndef ARNOLD_ENTITY_H
 #define ARNOLD_ENTITY_H
 
@@ -9,21 +5,27 @@
 #include <cstdio>
 #include <memory>
 
-struct dimensions {
+class Game;
+
+#include "../Game.h"
+
+
+struct Dimensions {
     float w;
     float h;
 };
 
-struct coordinates {
+struct Coordinates {
     float x;
     float y;
 };
 
 class Entity {
 public:
-    Entity(float x, float y, int id) {
-        coordinates_ = {x, y};
-        ID = id;
+    Entity(float _x, float _y, Game *_game, int _id) {
+        coordinates = {_x, _y};
+        id = _id;
+        game = _game;
     };
 
     virtual ~Entity() = default;
@@ -32,10 +34,11 @@ public:
 
     virtual void update(double deltaTime) = 0;
 
-    int ID;
+    int id;
 
-    dimensions dimensions_{};
-    coordinates coordinates_{};
+    Dimensions dimensions{};
+    Coordinates coordinates{};
+    Game *game;
 };
 
 

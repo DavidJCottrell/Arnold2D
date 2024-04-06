@@ -1,12 +1,8 @@
-//
-// Created by david on 06/04/24.
-//
-
 #include "Player.h"
-
+#include "Projectile.h"
 
 void Player::moveRight() {
-    coordinates_.x = coordinates_.x + MOVE_AMOUNT;
+    coordinates.x = coordinates.x + MOVE_AMOUNT;
 }
 
 bool isArrowKey(SDL_Keycode key) {
@@ -18,6 +14,13 @@ void Player::handleEvents(SDL_Event sdlEvent) {
         case SDL_KEYDOWN:
             moveRight();
             break;
+        case SDL_MOUSEBUTTONDOWN: {
+            Projectile projectile = Projectile(15, 15, game, 2);
+            projectile.destination = {200, 200};
+            game->addEntity<Projectile>(projectile);
+            break;
+        }
+
         default:
             break;
     }
@@ -26,10 +29,10 @@ void Player::handleEvents(SDL_Event sdlEvent) {
 void Player::render(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
     SDL_Rect shape = {
-            (int) coordinates_.x,
-            (int) coordinates_.y,
-            (int) dimensions_.w,
-            (int) dimensions_.h,
+            (int) coordinates.x,
+            (int) coordinates.y,
+            (int) dimensions.w,
+            (int) dimensions.h,
     };
     SDL_RenderFillRect(renderer, &shape);
 }
