@@ -4,16 +4,25 @@
 
 #include "Enemy.h"
 
-Enemy::Enemy()
-{
+void Enemy::render(SDL_Renderer *renderer) {
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+
+    SDL_Rect shape = {
+            (int) coordinates_.x,
+            (int) coordinates_.y,
+            (int) dimensions_.w,
+            (int) dimensions_.h,
+    };
+    SDL_RenderFillRect(renderer, &shape);
+
+    SDL_RenderFillRect(renderer, &shape);
 }
 
-Enemy::~Enemy()
-{
-}
+void Enemy::update(double deltaTime) {
 
-void Enemy::goCrazy()
-{
-    rect.x += rand() % 19 + (-9);
-    rect.y += rand() % 19 + (-9);
+    int xDirection = coordinates_.x > 400 ? -1 : 1;
+    int yDirection = coordinates_.y > 400 ? -1 : 1;
+
+    coordinates_.x += (deltaTime * 50) * xDirection;
+    coordinates_.y += (deltaTime * 50) * yDirection;
 }

@@ -9,41 +9,40 @@
 #include <cstdio>
 #include <vector>
 #include <iostream>
+#include <memory>
 #include "Enemy.h"
 #include "Player.h"
+#include "Constants.h"
 
-class Game
-{
+class Game {
 public:
+    Game();
+
     bool init(const char *title,
               int xpos, int ypos,
               int width, int height);
 
     void handleEvents();
+
     void update();
+
     void render();
+
     void clean();
 
-    int getRefreshRate();
-
-    bool running() { return isRunning; }
+    [[nodiscard]] bool getIsRunning() const { return isRunning; }
 
 private:
-    bool isRunning;
-    void spawnEntities(int width, int height);
-    SDL_Window *window;
-    SDL_Renderer *renderer;
-    std::vector<Enemy> enemies;
-    Player player;
+    Uint32 lastFrameTime = 0;
+    bool isRunning = false;
 
+    template<typename T>
+    void addEntity(T entity);
+
+    SDL_Window *window{};
+    SDL_Renderer *renderer{};
+    std::vector<std::unique_ptr<Entity>> entities;
     SDL_Event sdlEvent;
-    SDL_Keycode pressedKey;
-
-    bool isPlayerEnemyColliding();
-
-    bool isColliding = false;
-    int collisionCount = 0;
-    int collidedEnemyId = -1;
 };
 
 

@@ -1,32 +1,28 @@
 #include <SDL2/SDL.h>
 #include "Game.h"
+#include "Constants.h"
 
-Game *game = nullptr;
 
-int main()
-{
-    game = new Game();
+int main() {
+    Game game;
 
-    bool initSuccess = game->init(
+    bool initSuccess = game.init(
             "A Game Title",
             SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-            800, 600);
+            WINDOW_WIDTH, WINDOW_HEIGHT);
 
-    if (!initSuccess)
-    {
+    if (!initSuccess) {
+        std::cout << "Failed to initialise SDL" << std::endl;
         return 1;
     }
 
-    while (game->running())
-    {
-        game->handleEvents();
-        game->update();
-        game->render();
-
-        SDL_Delay(1000 / 60);
+    while (game.getIsRunning()) {
+        game.handleEvents();
+        game.update();
+        game.render();
     }
 
-    game->clean();
+    game.clean();
 
     return 0;
 }

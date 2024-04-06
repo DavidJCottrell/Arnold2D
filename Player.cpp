@@ -4,36 +4,36 @@
 
 #include "Player.h"
 
-Player::Player()
-{
+
+void Player::moveRight() {
+    coordinates_.x = coordinates_.x + MOVE_AMOUNT;
 }
 
-Player::~Player()
-{
+bool isArrowKey(SDL_Keycode key) {
+    return key == SDLK_UP || key == SDLK_DOWN || key == SDLK_RIGHT || key == SDLK_LEFT;
 }
 
-void Player::moveUp()
-{
-    rect.y = rect.y - MOVE_AMOUNT;
+void Player::handleEvents(SDL_Event sdlEvent) {
+    switch (sdlEvent.type) {
+        case SDL_KEYDOWN:
+            moveRight();
+            break;
+        default:
+            break;
+    }
 }
 
-void Player::moveDown()
-{
-    rect.y = rect.y + MOVE_AMOUNT;
-}
-
-void Player::moveRight()
-{
-    rect.x = rect.x + MOVE_AMOUNT;
-}
-
-void Player::moveLeft()
-{
-    rect.x = rect.x - MOVE_AMOUNT;
-}
-
-void Player::render(SDL_Renderer *renderer)
-{
+void Player::render(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-    SDL_RenderFillRect(renderer, &rect);
+    SDL_Rect shape = {
+            (int) coordinates_.x,
+            (int) coordinates_.y,
+            (int) dimensions_.w,
+            (int) dimensions_.h,
+    };
+    SDL_RenderFillRect(renderer, &shape);
 }
+
+void Player::update(double deltaTime) {
+}
+
