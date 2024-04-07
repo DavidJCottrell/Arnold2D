@@ -15,7 +15,8 @@ add_executable(arnold main.cpp
         Entities/Enemy.h
         Constants.h
         Entities/Projectile.cpp
-        Entities/Projectile.h)
+        Entities/Projectile.h
+)
 
 target_link_directories(arnold PRIVATE ${SDL2_LIBRARY_DIR})
 target_link_libraries(arnold PUBLIC SDL2)

@@ -8,7 +8,6 @@
 #include "../Game.h"
 #include "Projectile.h"
 
-#define MOVE_AMOUNT 150.0
 
 class Player : public Entity {
 public:
@@ -16,13 +15,15 @@ public:
         dimensions = {20, 20};
     }
 
-    void handleMovement(SDL_Keycode key, bool isHeld);
+    void registerMovementKey(SDL_Keycode key, bool isHeld);
 
     void handleEvents(SDL_Event sdlEvent);
 
     void render(SDL_Renderer *renderer) override;
 
     void update(double deltaTime) override;
+
+    int num = 5;
 
 private:
     Projectile spawnProjectile(int destinationX, int destinationY);

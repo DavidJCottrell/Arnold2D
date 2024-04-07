@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Constants.h"
 #include "Entities/Player.h"
+#include "Entities/Enemy.h"
 
 int main() {
     Game game;
@@ -16,8 +17,13 @@ int main() {
         return 1;
     }
 
-    Player player = Player(15, 15, &game);
-    game.addEntity<Player>(player);
+    game.addEntity<Player>(Player(15, 15, &game));
+
+    game.addEntity<Enemy>(Enemy(100, 200, &game));
+
+    game.addEntity<Enemy>(Enemy(200, 200, &game));
+
+    game.addEntity<Enemy>(Enemy(300, 200, &game));
 
     while (game.getIsRunning()) {
         game.handleEvents();

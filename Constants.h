@@ -1,7 +1,3 @@
-//
-// Created by david on 06/04/24.
-//
-
 #ifndef ARNOLD_CONSTANTS_H
 #define ARNOLD_CONSTANTS_H
 

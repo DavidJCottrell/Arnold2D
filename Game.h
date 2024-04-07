@@ -32,9 +32,11 @@ public:
 
     template<typename T>
     void addEntity(T entity) {
-        static_assert(std::is_base_of<Entity, T>::value, "Provided entity must be derived from Entity");
+        static_assert(std::is_base_of<Entity, T>::value, "Provided class must be derived from Entity");
         entities.push_back(std::make_unique<T>(std::move(entity)));
     }
+
+    const std::vector<std::unique_ptr<Entity>> &getEntities() const;
 
 
     [[nodiscard]] bool getIsRunning() const { return isRunning; }
@@ -44,6 +46,8 @@ private:
     bool isRunning = false;
 
     std::vector<std::unique_ptr<Entity>> entities;
+
+private:
 
     void removeMarkedEntities();
 

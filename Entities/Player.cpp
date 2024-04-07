@@ -1,10 +1,10 @@
 #include "Player.h"
 
-void Player::handleMovement(SDL_Keycode key, bool isHeld) {
+void Player::registerMovementKey(SDL_Keycode key, bool isHeld) {
     auto movementKey = movementKeys.find(key);
     // Check pressed key is a movement key
     if (movementKey != movementKeys.end())
-        movementKey->second = isHeld;
+        movementKey->second = isHeld; // true if key is pressed, false if it has been lifted
 }
 
 Projectile Player::spawnProjectile(int destinationX, int destinationY) {
@@ -21,10 +21,10 @@ Projectile Player::spawnProjectile(int destinationX, int destinationY) {
 void Player::handleEvents(SDL_Event sdlEvent) {
     switch (sdlEvent.type) {
         case SDL_KEYDOWN:
-            handleMovement(sdlEvent.key.keysym.sym, true);
+            registerMovementKey(sdlEvent.key.keysym.sym, true);
             break;
         case SDL_KEYUP:
-            handleMovement(sdlEvent.key.keysym.sym, false);
+            registerMovementKey(sdlEvent.key.keysym.sym, false);
             break;
         case SDL_MOUSEBUTTONDOWN: {
             int mouseX = 0, mouseY = 0;
@@ -49,6 +49,7 @@ void Player::render(SDL_Renderer *renderer) {
 }
 
 void Player::update(double deltaTime) {
+    // Player movement
     for (auto &movementKey: movementKeys) {
         if (movementKey.second) {
             if (movementKey.first == SDLK_w)
