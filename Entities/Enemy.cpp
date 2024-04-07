@@ -24,6 +24,18 @@ void Enemy::update(double deltaTime) {
         }
     }
 
+    float tolerance = 20.0f;
+    for (const auto &entity: game->getEntities()) {
+        if (dynamic_cast<Projectile *>(entity.get())) {
+            auto *pProjectile = dynamic_cast<Projectile *>(entity.get());
+            if (abs(coordinates.x - pProjectile->coordinates.x) < tolerance &&
+                abs(coordinates.y - pProjectile->coordinates.y) < tolerance) {
+                isMarkedForRemoval = true;
+                pProjectile->isMarkedForRemoval = true;
+            }
+        }
+    }
+
     float directionX = (float) playerCoordinates.x - coordinates.x;
     float directionY = (float) playerCoordinates.y - coordinates.y;
     float distance = sqrt(directionX * directionX + directionY * directionY);

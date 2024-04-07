@@ -36,7 +36,7 @@ public:
         entities.push_back(std::make_unique<T>(std::move(entity)));
     }
 
-    const std::vector<std::unique_ptr<Entity>> &getEntities() const;
+    [[nodiscard]] const std::vector<std::unique_ptr<Entity>> &getEntities() const;
 
 
     [[nodiscard]] bool getIsRunning() const { return isRunning; }

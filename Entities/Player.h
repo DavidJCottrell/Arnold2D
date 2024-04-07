@@ -6,6 +6,10 @@
 #include <map>
 #include "Entity.h"
 #include "../Game.h"
+
+
+class Projectile;
+
 #include "Projectile.h"
 
 

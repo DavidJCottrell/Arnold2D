@@ -78,15 +78,5 @@ const std::vector<std::unique_ptr<Entity>> &Game::getEntities() const {
     return entities;
 }
 
-//Player *Game::getPlayer() {
-//    for (const auto &entity: entities) {
-//        if (dynamic_cast<Player *>(entity.get())) {
-//            return dynamic_cast<Player *>(entity.get());
-//        }
-//    }
-//    return nullptr;
-//}
-
-
 Game::Game() = default;
 
