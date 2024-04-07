@@ -16,9 +16,8 @@ int main() {
         return 1;
     }
 
-    game.addEntity<Player>(Player(15.0, 15.0, &game, 1));
-//    game.addEntity<Enemy>(Enemy(15, 15, 2));
-//    game.addEntity<Enemy>(Enemy(150, 150, 3));
+    Player player = Player(15, 15, &game);
+    game.addEntity<Player>(player);
 
     while (game.getIsRunning()) {
         game.handleEvents();

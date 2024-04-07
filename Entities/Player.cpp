@@ -1,5 +1,4 @@
 #include "Player.h"
-#include "Projectile.h"
 
 void Player::moveRight() {
     coordinates.x = coordinates.x + MOVE_AMOUNT;
@@ -15,9 +14,8 @@ void Player::handleEvents(SDL_Event sdlEvent) {
             moveRight();
             break;
         case SDL_MOUSEBUTTONDOWN: {
-            Projectile projectile = Projectile(15, 15, game, 2);
-            projectile.destination = {200, 200};
-            game->addEntity<Projectile>(projectile);
+            Projectile projectile(12.0f, 12.0f, game, {200, 110});
+            game->addEntity(projectile);
             break;
         }
 

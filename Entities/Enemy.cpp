@@ -1,7 +1,3 @@
-//
-// Created by david on 06/04/24.
-//
-
 #include "Enemy.h"
 
 void Enemy::render(SDL_Renderer *renderer) {

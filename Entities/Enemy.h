@@ -11,7 +11,7 @@
 
 class Enemy : public Entity {
 public:
-    Enemy(float x, float y, Game *_game, int id) : Entity(x, y, _game, id) {
+    Enemy(float x, float y, Game *_game) : Entity(x, y, _game) {
         dimensions = {15, 15};
     }
 

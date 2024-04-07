@@ -22,9 +22,8 @@ struct Coordinates {
 
 class Entity {
 public:
-    Entity(float _x, float _y, Game *_game, int _id) {
+    Entity(float _x, float _y, Game *_game) {
         coordinates = {_x, _y};
-        id = _id;
         game = _game;
     };
 
@@ -34,11 +33,11 @@ public:
 
     virtual void update(double deltaTime) = 0;
 
-    int id;
-
     Dimensions dimensions{};
     Coordinates coordinates{};
     Game *game;
+
+
 };
 
 

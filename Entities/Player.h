@@ -5,12 +5,13 @@
 #include <cstdio>
 #include "Entity.h"
 #include "../Game.h"
+#include "Projectile.h"
 
 #define MOVE_AMOUNT 1
 
 class Player : public Entity {
 public:
-    Player(float _x, float _y, Game *_game, int _id) : Entity(_x, _y, _game, _id) {
+    Player(float _x, float _y, Game *_game) : Entity(_x, _y, _game) {
         dimensions = {20, 20};
     }
 

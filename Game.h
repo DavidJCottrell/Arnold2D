@@ -31,14 +31,8 @@ public:
 
     template<typename T>
     void addEntity(T entity) {
-        static_assert(std::is_base_of<Entity, T>::value, "entity_class must be derived from Entity");
-        entities.push_back(
-                std::make_unique<T>(
-                        entity.coordinates.x,
-                        entity.coordinates.y,
-                        entity.game,
-                        entities.size()
-                ));
+        static_assert(std::is_base_of<Entity, T>::value, "Provided entity must be derived from Entity");
+        entities.push_back(std::make_unique<T>(std::move(entity)));
     }
 
     [[nodiscard]] bool getIsRunning() const { return isRunning; }
@@ -47,9 +41,10 @@ private:
     Uint32 lastFrameTime = 0;
     bool isRunning = false;
 
+    std::vector<std::unique_ptr<Entity>> entities;
+
     SDL_Window *window{};
     SDL_Renderer *renderer{};
-    std::vector<std::unique_ptr<Entity>> entities;
 };
 
 
