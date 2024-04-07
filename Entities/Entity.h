@@ -27,7 +27,6 @@ public:
         game = _game;
     };
 
-
     virtual ~Entity() = default;
 
     virtual void render(SDL_Renderer *renderer) = 0;

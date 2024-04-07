@@ -1,33 +1,35 @@
 #include "Player.h"
 
-void Player::handleMovement(SDL_Keycode key) {
-    switch (key) {
-        case SDLK_UP:
-            coordinates.y -= MOVE_AMOUNT;
-            break;
-        case SDLK_DOWN:
-            coordinates.y += MOVE_AMOUNT;
-            break;
-        case SDLK_RIGHT:
-            coordinates.x += MOVE_AMOUNT;
-            break;
-        case SDLK_LEFT:
-            coordinates.x -= MOVE_AMOUNT;
-            break;
-        default:
-            break;
-    }
+void Player::handleMovement(SDL_Keycode key, bool isHeld) {
+    auto movementKey = movementKeys.find(key);
+    // Check pressed key is a movement key
+    if (movementKey != movementKeys.end())
+        movementKey->second = isHeld;
+}
+
+Projectile Player::spawnProjectile(int destinationX, int destinationY) {
+    float directionX = (float) destinationX - coordinates.x;
+    float directionY = (float) destinationY - coordinates.y;
+    float distance = sqrt(directionX * directionX + directionY * directionY);
+
+    directionX /= distance;
+    directionY /= distance;
+
+    return {coordinates.x, coordinates.y, game, directionX, directionY};
 }
 
 void Player::handleEvents(SDL_Event sdlEvent) {
     switch (sdlEvent.type) {
         case SDL_KEYDOWN:
-            handleMovement(sdlEvent.key.keysym.sym);
+            handleMovement(sdlEvent.key.keysym.sym, true);
+            break;
+        case SDL_KEYUP:
+            handleMovement(sdlEvent.key.keysym.sym, false);
             break;
         case SDL_MOUSEBUTTONDOWN: {
-            int xMouse = 0, yMouse = 0;
-            SDL_GetMouseState(&xMouse, &yMouse);
-            game->addEntity(Projectile(coordinates.x, coordinates.y, game, {(float) xMouse, (float) yMouse}));
+            int mouseX = 0, mouseY = 0;
+            SDL_GetMouseState(&mouseX, &mouseY);
+            game->addEntity(spawnProjectile(mouseX, mouseY));
             break;
         }
         default:
@@ -47,5 +49,16 @@ void Player::render(SDL_Renderer *renderer) {
 }
 
 void Player::update(double deltaTime) {
+    for (auto &movementKey: movementKeys) {
+        if (movementKey.second) {
+            if (movementKey.first == SDLK_w)
+                coordinates.y -= (float) (movementSpeed * deltaTime);
+            if (movementKey.first == SDLK_a)
+                coordinates.x -= (float) (movementSpeed * deltaTime);
+            if (movementKey.first == SDLK_s)
+                coordinates.y += (float) (movementSpeed * deltaTime);
+            if (movementKey.first == SDLK_d)
+                coordinates.x += (float) (movementSpeed * deltaTime);
+        }
+    }
 }
-
