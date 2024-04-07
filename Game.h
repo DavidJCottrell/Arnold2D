@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include <memory>
+#include <algorithm>
 #include "Constants.h"
 
 class Entity;
@@ -35,6 +36,7 @@ public:
         entities.push_back(std::make_unique<T>(std::move(entity)));
     }
 
+
     [[nodiscard]] bool getIsRunning() const { return isRunning; }
 
 private:
@@ -42,6 +44,8 @@ private:
     bool isRunning = false;
 
     std::vector<std::unique_ptr<Entity>> entities;
+
+    void removeMarkedEntities();
 
     SDL_Window *window{};
     SDL_Renderer *renderer{};

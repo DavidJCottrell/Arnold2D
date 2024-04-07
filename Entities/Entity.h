@@ -27,11 +27,14 @@ public:
         game = _game;
     };
 
+
     virtual ~Entity() = default;
 
     virtual void render(SDL_Renderer *renderer) = 0;
 
     virtual void update(double deltaTime) = 0;
+
+    bool isMarkedForRemoval = false;
 
     Dimensions dimensions{};
     Coordinates coordinates{};

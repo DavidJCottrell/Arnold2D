@@ -15,6 +15,23 @@ void Projectile::render(SDL_Renderer *renderer) {
 }
 
 void Projectile::update(double deltaTime) {
-    coordinates.x += (float) (deltaTime * destination.x);
-    coordinates.y += (float) (deltaTime * destination.y);
+    float directionX = destination.x - coordinates.x;
+    float directionY = destination.y - coordinates.y;
+
+    float distance = sqrt(directionX * directionX + directionY * directionY);
+    directionX /= distance;
+    directionY /= distance;
+
+    float speed = 400.0f; // Adjust speed as needed
+    coordinates.x += directionX * speed * deltaTime;
+    coordinates.y += directionY * speed * deltaTime;
+
+    float tolerance = 20.0f; // Adjust tolerance as needed
+    if (abs(coordinates.x - destination.x) < tolerance &&
+        abs(coordinates.y - destination.y) < tolerance) {
+        std::cout << "reached dest" << std::endl;
+        isMarkedForRemoval = true;
+    }
+
+
 }

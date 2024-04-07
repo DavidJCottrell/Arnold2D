@@ -34,6 +34,15 @@ void Game::handleEvents() {
     }
 }
 
+void Game::removeMarkedEntities() {
+    entities.erase(std::remove_if(
+            entities.begin(), entities.end(),
+            [](const std::unique_ptr<Entity> &entity) {
+                return entity->isMarkedForRemoval;
+            }), entities.end());
+
+}
+
 void Game::update() {
     int timeToWait = FRAME_TARGET_TIME - (SDL_GetTicks() - lastFrameTime);
     if (timeToWait > 0 && timeToWait <= FRAME_TARGET_TIME)
@@ -41,6 +50,8 @@ void Game::update() {
 
     double deltaTime = (SDL_GetTicks() - lastFrameTime) / 1000.0;
     lastFrameTime = SDL_GetTicks();
+
+    removeMarkedEntities();
 
     for (auto &entity: entities)
         entity->update(deltaTime);

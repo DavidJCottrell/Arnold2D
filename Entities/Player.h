@@ -7,7 +7,7 @@
 #include "../Game.h"
 #include "Projectile.h"
 
-#define MOVE_AMOUNT 1
+#define MOVE_AMOUNT 20
 
 class Player : public Entity {
 public:
@@ -17,7 +17,7 @@ public:
 
     bool isMoving = false;
 
-    void moveRight();
+    void handleMovement(SDL_Keycode key);
 
     void handleEvents(SDL_Event sdlEvent);
 

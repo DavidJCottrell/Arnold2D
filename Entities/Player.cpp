@@ -1,24 +1,35 @@
 #include "Player.h"
 
-void Player::moveRight() {
-    coordinates.x = coordinates.x + MOVE_AMOUNT;
-}
-
-bool isArrowKey(SDL_Keycode key) {
-    return key == SDLK_UP || key == SDLK_DOWN || key == SDLK_RIGHT || key == SDLK_LEFT;
+void Player::handleMovement(SDL_Keycode key) {
+    switch (key) {
+        case SDLK_UP:
+            coordinates.y -= MOVE_AMOUNT;
+            break;
+        case SDLK_DOWN:
+            coordinates.y += MOVE_AMOUNT;
+            break;
+        case SDLK_RIGHT:
+            coordinates.x += MOVE_AMOUNT;
+            break;
+        case SDLK_LEFT:
+            coordinates.x -= MOVE_AMOUNT;
+            break;
+        default:
+            break;
+    }
 }
 
 void Player::handleEvents(SDL_Event sdlEvent) {
     switch (sdlEvent.type) {
         case SDL_KEYDOWN:
-            moveRight();
+            handleMovement(sdlEvent.key.keysym.sym);
             break;
         case SDL_MOUSEBUTTONDOWN: {
-            Projectile projectile(12.0f, 12.0f, game, {200, 110});
-            game->addEntity(projectile);
+            int xMouse = 0, yMouse = 0;
+            SDL_GetMouseState(&xMouse, &yMouse);
+            game->addEntity(Projectile(coordinates.x, coordinates.y, game, {(float) xMouse, (float) yMouse}));
             break;
         }
-
         default:
             break;
     }
