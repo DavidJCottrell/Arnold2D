@@ -5,11 +5,13 @@
 #include <iostream>
 #include <string>
 
-#define SERVER_ADDR "tcp://localhost:5001"
+#define SERVER_ADDR "tcp://127.0.0.1:5001"
 
-class MessageHandler {
+class MessageHandler
+{
 public:
-    static MessageHandler &getInstance() {
+    static MessageHandler &getInstance()
+    {
         static MessageHandler instance;
         return instance;
     }
@@ -25,5 +27,4 @@ private:
     zmq::socket_t zmq_send_socket;
 };
 
-
-#endif //ARNOLD_MESSAGEHANDLER_H
+#endif // ARNOLD_MESSAGEHANDLER_H
