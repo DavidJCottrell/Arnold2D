@@ -1,8 +1,8 @@
 #include "Game.h"
 #include "Entities/Player.h"
 
-bool Game::init(const char *title,
-                int xpos, int ypos,
+bool Game::init(const char *windowTitle,
+                int xPos, int yPos,
                 int width, int height) {
 
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -11,8 +11,8 @@ bool Game::init(const char *title,
     }
 
     window = SDL_CreateWindow(
-            title,
-            xpos, ypos,
+            windowTitle,
+            xPos, yPos,
             width, height,
             SDL_WINDOW_SHOWN);
 

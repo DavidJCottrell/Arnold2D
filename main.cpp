@@ -6,6 +6,7 @@
 #include "Constants.h"
 #include "Entities/Player.h"
 #include "Entities/Enemy.h"
+#include "MessageHandler.h"
 
 void spawnEnemies(Game *game) {
     while (game->getIsRunning()) {

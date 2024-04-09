@@ -13,13 +13,12 @@ class Entity;
 
 #include "Entities/Entity.h"
 
-
 class Game {
 public:
     Game();
 
-    bool init(const char *title,
-              int xpos, int ypos,
+    bool init(const char *windowTitle,
+              int xPos, int yPos,
               int width, int height);
 
     void handleEvents();
@@ -40,6 +39,8 @@ public:
 
 
     [[nodiscard]] bool getIsRunning() const { return isRunning; }
+
+    void endGame() { isRunning = false; }
 
 private:
     Uint32 lastFrameTime = 0;

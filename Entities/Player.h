@@ -11,6 +11,7 @@
 class Projectile;
 
 #include "Projectile.h"
+#include "../MessageHandler.h"
 
 
 class Player : public Entity {
@@ -27,7 +28,7 @@ public:
 
     void update(double deltaTime) override;
 
-    int num = 5;
+    double health = 100;
 
 private:
     Projectile spawnProjectile(int destinationX, int destinationY);

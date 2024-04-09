@@ -30,6 +30,7 @@ void Player::handleEvents(SDL_Event sdlEvent) {
             int mouseX = 0, mouseY = 0;
             SDL_GetMouseState(&mouseX, &mouseY);
             game->addEntity(spawnProjectile(mouseX, mouseY));
+            MessageHandler::getInstance().SendMsg("Pew");
             break;
         }
         default:
@@ -49,6 +50,10 @@ void Player::render(SDL_Renderer *renderer) {
 }
 
 void Player::update(double deltaTime) {
+    if (health <= 0) {
+        MessageHandler::getInstance().SendMsg("Game Over");
+        game->endGame();
+    }
     // Player movement
     for (auto &movementKey: movementKeys) {
         if (movementKey.second) {
