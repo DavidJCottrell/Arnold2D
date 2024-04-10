@@ -69,7 +69,7 @@ void Player::update(double deltaTime) {
         }
     }
 
-
+    // Normalise horizontal movement
     double vecMagnitude = std::sqrt(std::pow(moveAmountX, 2) + std::pow(moveAmountY, 2));
     if (vecMagnitude > 0) {
         moveAmountX /= (float) vecMagnitude;

@@ -7,11 +7,11 @@
 #include <iostream>
 #include <memory>
 #include <algorithm>
-#include "Constants.h"
+#include "../Constants.h"
 
 class Entity;
 
-#include "Entities/Entity.h"
+#include "../Entities/Entity.h"
 
 class Game {
 public:

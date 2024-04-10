@@ -2,11 +2,11 @@
 #include <thread>
 #include <chrono>
 #include <random>
-#include "Game.h"
+#include "Engine/Game.h"
 #include "Constants.h"
 #include "Entities/Player.h"
 #include "Entities/Enemy.h"
-#include "MessageHandler.h"
+#include "Engine/MessageHandler.h"
 
 void spawnEnemies(Game *game) {
     while (game->getIsRunning()) {

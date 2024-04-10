@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "Entities/Player.h"
+#include "../Entities/Player.h"
 
 bool Game::init(const char *windowTitle,
                 int xPos, int yPos,

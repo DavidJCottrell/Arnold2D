@@ -7,8 +7,8 @@ find_package(SDL2 REQUIRED)
 find_library(ZeroMQ czmq REQUIRED)
 
 add_executable(arnold main.cpp
-        Game.cpp
-        Game.h
+        Engine/Game.cpp
+        Engine/Game.h
         Entities/Player.cpp
         Entities/Player.h
         Entities/Entity.h
@@ -17,8 +17,8 @@ add_executable(arnold main.cpp
         Constants.h
         Entities/Projectile.cpp
         Entities/Projectile.h
-        MessageHandler.h
-        MessageHandler.cpp
+        Engine/MessageHandler.h
+        Engine/MessageHandler.cpp
 )
 
 target_link_directories(arnold PRIVATE ${SDL2_LIBRARY_DIR})

@@ -8,7 +8,7 @@
 #include <cstdlib>
 #include "Entity.h"
 #include "Player.h"
-#include "../MessageHandler.h"
+#include "../Engine/MessageHandler.h"
 
 
 class Enemy : public Entity {

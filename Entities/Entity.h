@@ -7,7 +7,7 @@
 
 class Game;
 
-#include "../Game.h"
+#include "../Engine/Game.h"
 
 
 struct Dimensions {

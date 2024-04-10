@@ -5,13 +5,13 @@
 #include <cstdio>
 #include <map>
 #include "Entity.h"
-#include "../Game.h"
+#include "../Engine/Game.h"
 
 
 class Projectile;
 
 #include "Projectile.h"
-#include "../MessageHandler.h"
+#include "../Engine/MessageHandler.h"
 
 
 class Player : public Entity {
