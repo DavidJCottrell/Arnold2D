@@ -2,9 +2,8 @@
 
 void Player::registerMovementKey(SDL_Keycode key, bool isHeld) {
     auto movementKey = movementKeys.find(key);
-    // Check pressed key is a movement key
     if (movementKey != movementKeys.end())
-        movementKey->second = isHeld; // true if key is pressed, false if it has been lifted
+        movementKey->second = isHeld;
 }
 
 Projectile Player::spawnProjectile(int destinationX, int destinationY) {
@@ -54,17 +53,29 @@ void Player::update(double deltaTime) {
         MessageHandler::getInstance().SendMsg("Game Over");
         game->endGame();
     }
-    // Player movement
+
+    float moveAmountX = 0.0f, moveAmountY = 0.0f;
     for (auto &movementKey: movementKeys) {
+        // Key is being pressed
         if (movementKey.second) {
             if (movementKey.first == SDLK_w)
-                coordinates.y -= (float) (movementSpeed * deltaTime);
+                moveAmountY -= 1.0f;
             if (movementKey.first == SDLK_a)
-                coordinates.x -= (float) (movementSpeed * deltaTime);
+                moveAmountX -= 1.0f;
             if (movementKey.first == SDLK_s)
-                coordinates.y += (float) (movementSpeed * deltaTime);
+                moveAmountY += 1.0f;
             if (movementKey.first == SDLK_d)
-                coordinates.x += (float) (movementSpeed * deltaTime);
+                moveAmountX += 1.0f;
         }
     }
+
+
+    double vecMagnitude = std::sqrt(std::pow(moveAmountX, 2) + std::pow(moveAmountY, 2));
+    if (vecMagnitude > 0) {
+        moveAmountX /= (float) vecMagnitude;
+        moveAmountY /= (float) vecMagnitude;
+    }
+
+    coordinates.x += (float) (moveAmountX * movementSpeed * deltaTime);
+    coordinates.y += (float) (moveAmountY * movementSpeed * deltaTime);
 }
