@@ -19,7 +19,12 @@ add_executable(arnold main.cpp
         Entities/Projectile.h
         Engine/MessageHandler.h
         Engine/MessageHandler.cpp
+        Engine/AudioLoader.cpp
+        Engine/AudioLoader.h
+        Engine/Utilities/Utils.h
+        Engine/Utilities/Utils.cpp
+        Engine/Utilities/Geometry.h
 )
 
 target_link_directories(arnold PRIVATE ${SDL2_LIBRARY_DIR})
-target_link_libraries(arnold PUBLIC SDL2 czmq zmq)
+target_link_libraries(arnold PUBLIC SDL2 SDL2_mixer SDL2_image czmq zmq)

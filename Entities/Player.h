@@ -7,16 +7,16 @@
 #include "Entity.h"
 #include "../Engine/Game.h"
 
-
 class Projectile;
 
 #include "Projectile.h"
 #include "../Engine/MessageHandler.h"
+#include "../Engine/AudioLoader.h"
 
 
 class Player : public Entity {
 public:
-    Player(float _x, float _y, Game *_game) : Entity(_x, _y, _game) {
+    Player(Coordinates _coordinates, Game *_game) : Entity(_coordinates, _game) {
         dimensions = {20, 20};
     }
 
@@ -28,14 +28,21 @@ public:
 
     void update(double deltaTime) override;
 
-    double health = 100;
+    void takeDamage(double damage) const;
+
 
 private:
-    Projectile spawnProjectile(int destinationX, int destinationY);
+    Projectile spawnProjectile(Coordinates destination);
 
     double movementSpeed = 150.0;
 
+    double health = 100;
+
     std::vector<SDL_Keycode> currentHeldKeys;
+
+    void loadAudioFiles();
+
+    Mix_Chunk *gunSound = nullptr;
 
     std::map<SDL_Keycode, bool> movementKeys = {
             {SDLK_w, false},

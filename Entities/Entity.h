@@ -4,26 +4,17 @@
 #include <SDL2/SDL.h>
 #include <cstdio>
 #include <memory>
+#include "../Engine/Utilities/Geometry.h"
 
 class Game;
 
 #include "../Engine/Game.h"
 
 
-struct Dimensions {
-    float w;
-    float h;
-};
-
-struct Coordinates {
-    float x;
-    float y;
-};
-
 class Entity {
 public:
-    Entity(float _x, float _y, Game *_game) {
-        coordinates = {_x, _y};
+    Entity(Coordinates _coordinates, Game *_game) {
+        coordinates = _coordinates;
         game = _game;
     };
 
@@ -38,8 +29,6 @@ public:
     Dimensions dimensions{};
     Coordinates coordinates{};
     Game *game;
-
-
 };
 
 

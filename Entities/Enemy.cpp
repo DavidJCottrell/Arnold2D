@@ -36,7 +36,7 @@ void Enemy::update(double deltaTime) {
         if (auto *pPlayer = dynamic_cast<Player *>(entity.get())) {
             if (isColliding(coordinates, entityCoordinates, tolerance)) {
                 isMarkedForRemoval = true;
-                pPlayer->health -= 25;
+                pPlayer->takeDamage(25);
                 MessageHandler::getInstance().SendMsg("Took Damage");
             }
         }

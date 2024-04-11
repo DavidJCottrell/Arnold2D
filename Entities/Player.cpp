@@ -1,23 +1,29 @@
 #include "Player.h"
 
+
 void Player::registerMovementKey(SDL_Keycode key, bool isHeld) {
     auto movementKey = movementKeys.find(key);
     if (movementKey != movementKeys.end())
         movementKey->second = isHeld;
 }
 
-Projectile Player::spawnProjectile(int destinationX, int destinationY) {
-    float directionX = (float) destinationX - coordinates.x;
-    float directionY = (float) destinationY - coordinates.y;
-    float distance = sqrt(directionX * directionX + directionY * directionY);
+Projectile Player::spawnProjectile(Coordinates destination) {
+    float directionX = (float) destination.x - coordinates.x;
+    float directionY = (float) destination.y - coordinates.y;
+    auto distance = (float) sqrt(pow(directionX, 2) + pow(directionY, 2));
 
     directionX /= distance;
     directionY /= distance;
 
-    return {coordinates.x, coordinates.y, game, directionX, directionY};
+    return {coordinates, game, {directionX, directionY}};
+}
+
+void Player::loadAudioFiles() {
+    if (gunSound == nullptr) gunSound = AudioLoader::getInstance().loadMedia(("../assets/audio/laser.mp3"));
 }
 
 void Player::handleEvents(SDL_Event sdlEvent) {
+    loadAudioFiles();
     switch (sdlEvent.type) {
         case SDL_KEYDOWN:
             registerMovementKey(sdlEvent.key.keysym.sym, true);
@@ -28,8 +34,9 @@ void Player::handleEvents(SDL_Event sdlEvent) {
         case SDL_MOUSEBUTTONDOWN: {
             int mouseX = 0, mouseY = 0;
             SDL_GetMouseState(&mouseX, &mouseY);
-            game->addEntity(spawnProjectile(mouseX, mouseY));
+            game->addEntity(spawnProjectile({(float) mouseX, (float) mouseY}));
             MessageHandler::getInstance().SendMsg("Pew");
+            AudioLoader::getInstance().playSound(gunSound);
             break;
         }
         default:
@@ -54,28 +61,28 @@ void Player::update(double deltaTime) {
         game->endGame();
     }
 
-    float moveAmountX = 0.0f, moveAmountY = 0.0f;
+    Coordinates moveAmount = {0.0f, 0.0f};
+
     for (auto &movementKey: movementKeys) {
         // Key is being pressed
         if (movementKey.second) {
             if (movementKey.first == SDLK_w)
-                moveAmountY -= 1.0f;
+                moveAmount.y -= 1.0f;
             if (movementKey.first == SDLK_a)
-                moveAmountX -= 1.0f;
+                moveAmount.x -= 1.0f;
             if (movementKey.first == SDLK_s)
-                moveAmountY += 1.0f;
+                moveAmount.y += 1.0f;
             if (movementKey.first == SDLK_d)
-                moveAmountX += 1.0f;
+                moveAmount.x += 1.0f;
         }
     }
 
-    // Normalise horizontal movement
-    double vecMagnitude = std::sqrt(std::pow(moveAmountX, 2) + std::pow(moveAmountY, 2));
-    if (vecMagnitude > 0) {
-        moveAmountX /= (float) vecMagnitude;
-        moveAmountY /= (float) vecMagnitude;
-    }
+    moveAmount = Utils::normalise(moveAmount);
 
-    coordinates.x += (float) (moveAmountX * movementSpeed * deltaTime);
-    coordinates.y += (float) (moveAmountY * movementSpeed * deltaTime);
+    coordinates.x += (float) (moveAmount.x * movementSpeed * deltaTime);
+    coordinates.y += (float) (moveAmount.y * movementSpeed * deltaTime);
+}
+
+void Player::takeDamage(double damage) const {
+    health - damage;
 }

@@ -3,13 +3,15 @@
 
 #include "Entity.h"
 #include "Enemy.h"
+#include "../Engine/Utilities/Utils.h"
 
 class Projectile : public Entity {
 public:
-    Projectile(float x, float y, Game *_game, float _directionX, float _directionY) : Entity(x, y, _game) {
+    Projectile(Coordinates _coordinates, Game *_game, Coordinates _destination
+    ) : Entity(_coordinates, _game) {
         dimensions = {10, 10};
-        directionX = _directionX;
-        directionY = _directionY;
+        destination = _destination;
+        firedFromCoordinates = coordinates;
     }
 
     void render(SDL_Renderer *renderer) override;
@@ -17,8 +19,10 @@ public:
     void update(double deltaTime) override;
 
 private:
-    float directionX;
-    float directionY;
+    Coordinates destination{};
+    Coordinates firedFromCoordinates{};
+    float speed = 400.0f;
+    float range = 300.0f;
 };
 
 

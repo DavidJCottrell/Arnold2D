@@ -10,6 +10,10 @@ bool Game::init(const char *windowTitle,
         return false;
     }
 
+    if (!AudioLoader::init()) {
+        std::cout << "Failed to init audio player or whatever" << std::endl;
+    }
+
     window = SDL_CreateWindow(
             windowTitle,
             xPos, yPos,

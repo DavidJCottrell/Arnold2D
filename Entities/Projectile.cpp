@@ -16,9 +16,16 @@ void Projectile::render(SDL_Renderer *renderer) {
 }
 
 void Projectile::update(double deltaTime) {
+    float distanceX = abs(abs(coordinates.x) - abs(firedFromCoordinates.x));
+    float distanceY = abs(abs(coordinates.y) - abs(firedFromCoordinates.y));
 
-    float speed = 400.0f;
-    coordinates.x += directionX * speed * deltaTime;
-    coordinates.y += directionY * speed * deltaTime;
-    
+    if (distanceX >= range || distanceY >= range) {
+        isMarkedForRemoval = true;
+    }
+
+    Coordinates moveAmount = {(float) (destination.x * speed * deltaTime), (float) (destination.y * speed * deltaTime)};
+    moveAmount = Utils::normalise(moveAmount);
+
+    coordinates.x += (float) (moveAmount.x * speed * deltaTime);
+    coordinates.y += (float) (moveAmount.y * speed * deltaTime);
 }

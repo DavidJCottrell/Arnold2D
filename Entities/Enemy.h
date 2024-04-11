@@ -13,7 +13,7 @@
 
 class Enemy : public Entity {
 public:
-    Enemy(float x, float y, Game *_game) : Entity(x, y, _game) {
+    Enemy(Coordinates _coordinates, Game *_game) : Entity(_coordinates, _game) {
         dimensions = {15, 15};
     }
 

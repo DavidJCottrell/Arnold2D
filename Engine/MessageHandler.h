@@ -7,11 +7,10 @@
 
 #define SERVER_ADDR "tcp://127.0.0.1:5001"
 
-class MessageHandler
-{
+class MessageHandler {
+
 public:
-    static MessageHandler &getInstance()
-    {
+    static MessageHandler &getInstance() {
         static MessageHandler instance;
         return instance;
     }

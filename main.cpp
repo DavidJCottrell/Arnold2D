@@ -8,14 +8,14 @@
 #include "Entities/Enemy.h"
 #include "Engine/MessageHandler.h"
 
-void spawnEnemies(Game *game) {
-    while (game->getIsRunning()) {
+void spawnEnemies(Game *game, bool useEnemies) {
+    while (game->getIsRunning() && useEnemies) {
 
         std::random_device rd;
         int randX = std::uniform_int_distribution<int>(0, WINDOW_WIDTH)(rd);
         int randY = std::uniform_int_distribution<int>(0, WINDOW_HEIGHT)(rd);
 
-        game->addEntity<Enemy>(Enemy((float) randX, (float) randY, game));
+        game->addEntity<Enemy>(Enemy({(float) randX, (float) randY}, game));
         std::this_thread::sleep_for(std::chrono::milliseconds(ENEMY_SPAWN_DELAY));
     }
 }
@@ -33,15 +33,17 @@ int main() {
         return 1;
     }
 
-    std::thread enemySpawner(spawnEnemies, &game);
 
-    game.addEntity<Player>(Player(15, 15, &game));
+    std::thread enemySpawner(spawnEnemies, &game, false);
+
+    game.addEntity<Player>(Player({400, 300}, &game));
 
     while (game.getIsRunning()) {
         game.handleEvents();
         game.update();
         game.render();
     }
+
 
     enemySpawner.join();
     game.clean();
