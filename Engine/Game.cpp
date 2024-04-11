@@ -35,21 +35,19 @@ void Game::handleEvents() {
             return;
         }
         // Retrieve the player object from the entities list and handle the user's player input
-        auto it = entities.begin();
-        if (it != entities.end()) {
-            auto *player = dynamic_cast<Player *>((*it).get());
-            if (player) player->handleEvents(sdlEvent);
+        for (const auto &entity: entities) {
+            if (auto *player = dynamic_cast<Player *>(entity.get())) {
+                player->handleEvents(sdlEvent);
+                break;
+            }
         }
     }
 }
 
 void Game::removeMarkedEntities() {
-    entities.erase(std::remove_if(
-            entities.begin(), entities.end(),
-            [](const std::unique_ptr<Entity> &entity) {
-                return entity->isMarkedForRemoval;
-            }), entities.end());
-
+    entities.erase(std::remove_if(entities.begin(), entities.end(), [](const std::unique_ptr<Entity> &entity) {
+        return entity->isMarkedForRemoval;
+    }), entities.end());
 }
 
 void Game::update() {

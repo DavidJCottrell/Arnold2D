@@ -32,8 +32,10 @@ int main() {
         std::cout << "Failed to initialise SDL" << std::endl;
         return 1;
     }
-    
-    std::thread enemySpawner(spawnEnemies, &game, true);
+
+    std::thread enemySpawner(spawnEnemies, &game, false);
+
+    game.addEntity<Enemy>(Enemy({(float) 10.0, (float) 20.0}, &game));
 
     game.addEntity<Player>(Player({400, 300}, &game));
 
