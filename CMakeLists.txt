@@ -19,8 +19,6 @@ add_executable(arnold main.cpp
         Entities/Projectile.h
         Engine/MessageHandler.h
         Engine/MessageHandler.cpp
-        Engine/AudioLoader.cpp
-        Engine/AudioLoader.h
         Engine/Utilities/Utils.h
         Engine/Utilities/Utils.cpp
         Engine/Utilities/Geometry.h

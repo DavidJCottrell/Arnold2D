@@ -18,12 +18,7 @@ Projectile Player::spawnProjectile(Coordinates destination) {
     return {coordinates, game, {directionX, directionY}};
 }
 
-void Player::loadAudioFiles() {
-    if (gunSound == nullptr) gunSound = AudioLoader::getInstance().loadMedia(("../assets/audio/laser.mp3"));
-}
-
 void Player::handleEvents(SDL_Event sdlEvent) {
-    loadAudioFiles();
     switch (sdlEvent.type) {
         case SDL_KEYDOWN:
             registerMovementKey(sdlEvent.key.keysym.sym, true);
@@ -36,7 +31,7 @@ void Player::handleEvents(SDL_Event sdlEvent) {
             SDL_GetMouseState(&mouseX, &mouseY);
             game->addEntity(spawnProjectile({(float) mouseX, (float) mouseY}));
             MessageHandler::getInstance().SendMsg("Pew");
-            AudioLoader::getInstance().playSound(gunSound);
+            Utils::Audio::playSound(gunSound);
             break;
         }
         default:

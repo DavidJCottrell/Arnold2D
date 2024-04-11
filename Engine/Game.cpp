@@ -10,8 +10,9 @@ bool Game::init(const char *windowTitle,
         return false;
     }
 
-    if (!AudioLoader::init()) {
-        std::cout << "Failed to init audio player or whatever" << std::endl;
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+        return false;
     }
 
     window = SDL_CreateWindow(

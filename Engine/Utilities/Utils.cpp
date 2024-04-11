@@ -9,3 +9,15 @@ Coordinates Utils::normalise(Coordinates coordinates) {
     }
     return normalisedCoordinates;
 }
+
+Mix_Chunk *Utils::Audio::loadMedia(const char *path) {
+    Mix_Chunk *audio = Mix_LoadWAV(path);
+    if (audio == nullptr) {
+        printf("Failed to load low sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+    }
+    return audio;
+}
+
+void Utils::Audio::playSound(Mix_Chunk *audio) {
+    Mix_PlayChannel(-1, audio, 0);
+}
