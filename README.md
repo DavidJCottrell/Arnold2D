@@ -1,4 +1,4 @@
-## Ubuntu Setup
+sudo apt install libsdl2-image-dev## Ubuntu Setup
 
 ### ZeroMQ:
 

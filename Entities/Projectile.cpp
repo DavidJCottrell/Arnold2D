@@ -7,8 +7,8 @@ void Projectile::render(SDL_Renderer *renderer) {
     SDL_Rect shape = {
             (int) coordinates.x,
             (int) coordinates.y,
-            (int) dimensions.w,
-            (int) dimensions.h,
+            (int) dimensions.x,
+            (int) dimensions.y,
     };
     SDL_RenderFillRect(renderer, &shape);
 
@@ -23,8 +23,8 @@ void Projectile::update(double deltaTime) {
         isMarkedForRemoval = true;
     }
 
-    Coordinates moveAmount = {(float) (destination.x * speed * deltaTime), (float) (destination.y * speed * deltaTime)};
-    moveAmount = Utils::normalise(moveAmount);
+    Vector2D moveAmount = {(float) (destination.x * speed * deltaTime), (float) (destination.y * speed * deltaTime)};
+    moveAmount = Utils::Geometry::normalise(moveAmount);
 
     coordinates.x += (float) (moveAmount.x * speed * deltaTime);
     coordinates.y += (float) (moveAmount.y * speed * deltaTime);

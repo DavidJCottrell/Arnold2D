@@ -34,8 +34,12 @@ void Game::handleEvents() {
             isRunning = false;
             return;
         }
+        // Retrieve the player object from the entities list and handle the user's player input
         auto it = entities.begin();
-        dynamic_cast<Player *>((*it).get())->handleEvents(sdlEvent);
+        if (it != entities.end()) {
+            auto *player = dynamic_cast<Player *>((*it).get());
+            if (player) player->handleEvents(sdlEvent);
+        }
     }
 }
 

@@ -8,16 +8,17 @@
 #include "Entity.h"
 #include "../Engine/Game.h"
 #include "../Engine/Utilities/Utils.h"
+#include "../Engine/MessageHandler.h"
 
 class Projectile;
 
 #include "Projectile.h"
-#include "../Engine/MessageHandler.h"
 
+using namespace Utils;
 
 class Player : public Entity {
 public:
-    Player(Coordinates _coordinates, Game *_game) : Entity(_coordinates, _game) {
+    Player(Geometry::Vector2D _coordinates, Game *_game) : Entity(_coordinates, _game) {
         dimensions = {20, 20};
         gunSound = Utils::Audio::loadMedia(("../assets/audio/laser.mp3"));
     }
@@ -34,7 +35,7 @@ public:
 
 
 private:
-    Projectile spawnProjectile(Coordinates destination);
+    Projectile spawnProjectile(Geometry::Vector2D destination);
 
     double movementSpeed = 150.0;
 

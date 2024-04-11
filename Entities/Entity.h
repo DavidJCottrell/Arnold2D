@@ -4,16 +4,17 @@
 #include <SDL2/SDL.h>
 #include <cstdio>
 #include <memory>
-#include "../Engine/Utilities/Geometry.h"
+#include "../Engine/Utilities/Utils.h"
 
 class Game;
 
 #include "../Engine/Game.h"
 
+using namespace Utils;
 
 class Entity {
 public:
-    Entity(Coordinates _coordinates, Game *_game) {
+    Entity(Geometry::Vector2D _coordinates, Game *_game) {
         coordinates = _coordinates;
         game = _game;
     };
@@ -26,8 +27,8 @@ public:
 
     bool isMarkedForRemoval = false;
 
-    Dimensions dimensions{};
-    Coordinates coordinates{};
+    Geometry::Vector2D dimensions{};
+    Geometry::Vector2D coordinates{};
     Game *game;
 };
 
