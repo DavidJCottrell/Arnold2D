@@ -6,10 +6,10 @@
 #include <SDL2/SDL.h>
 #include <cstdio>
 #include <cstdlib>
-#include "Entity.h"
-#include "Player.h"
-#include "../Engine/MessageHandler.h"
-#include "../Engine/Utilities/Utils.h"
+#include "../Entity.h"
+#include "../Player/Player.h"
+#include "../../Engine/MessageHandler.h"
+#include "../../Engine/Utilities/Utils.h"
 
 using namespace Utils::Geometry;
 

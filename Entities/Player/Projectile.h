@@ -1,9 +1,9 @@
 #ifndef ARNOLD_PROJECTILE_H
 #define ARNOLD_PROJECTILE_H
 
-#include "Entity.h"
-#include "Enemy.h"
-#include "../Engine/Utilities/Utils.h"
+#include "../Entity.h"
+#include "../Enemies/Enemy.h"
+#include "../../Engine/Utilities/Utils.h"
 
 using namespace Utils::Geometry;
 
@@ -13,7 +13,7 @@ public:
     ) : Entity(_coordinates, _game) {
         dimensions = {10, 10};
         destination = _destination;
-        firedFromCoordinates = coordinates;
+        origin = coordinates;
     }
 
     void render(SDL_Renderer *renderer) override;
@@ -22,7 +22,7 @@ public:
 
 private:
     Vector2D destination{};
-    Vector2D firedFromCoordinates{};
+    Vector2D origin{};
     float speed = 400.0f;
     float range = 300.0f;
 };

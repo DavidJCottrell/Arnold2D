@@ -5,10 +5,10 @@
 #include <SDL2/SDL_mixer.h>
 #include <cstdio>
 #include <map>
-#include "Entity.h"
-#include "../Engine/Game.h"
-#include "../Engine/Utilities/Utils.h"
-#include "../Engine/MessageHandler.h"
+#include "../Entity.h"
+#include "../../Engine/Game.h"
+#include "../../Engine/Utilities/Utils.h"
+#include "../../Engine/MessageHandler.h"
 
 class Projectile;
 

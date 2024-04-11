@@ -9,14 +9,14 @@ find_library(ZeroMQ czmq REQUIRED)
 add_executable(arnold main.cpp
         Engine/Game.cpp
         Engine/Game.h
-        Entities/Player.cpp
-        Entities/Player.h
+        Entities/Player/Player.cpp
+        Entities/Player/Player.h
         Entities/Entity.h
-        Entities/Enemy.cpp
-        Entities/Enemy.h
+        Entities/Enemies/Enemy.cpp
+        Entities/Enemies/Enemy.h
         Constants.h
-        Entities/Projectile.cpp
-        Entities/Projectile.h
+        Entities/Player/Projectile.cpp
+        Entities/Player/Projectile.h
         Engine/MessageHandler.h
         Engine/MessageHandler.cpp
         Engine/Utilities/Utils.h
