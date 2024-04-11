@@ -5,9 +5,11 @@
 #include "Enemy.h"
 #include "../Engine/Utilities/Utils.h"
 
+using namespace Utils::Geometry;
+
 class Projectile : public Entity {
 public:
-    Projectile(Coordinates _coordinates, Game *_game, Coordinates _destination
+    Projectile(Vector2D _coordinates, Game *_game, Vector2D _destination
     ) : Entity(_coordinates, _game) {
         dimensions = {10, 10};
         destination = _destination;
@@ -19,8 +21,8 @@ public:
     void update(double deltaTime) override;
 
 private:
-    Coordinates destination{};
-    Coordinates firedFromCoordinates{};
+    Vector2D destination{};
+    Vector2D firedFromCoordinates{};
     float speed = 400.0f;
     float range = 300.0f;
 };

@@ -34,7 +34,7 @@ int main() {
     }
 
 
-    std::thread enemySpawner(spawnEnemies, &game, false);
+    std::thread enemySpawner(spawnEnemies, &game, true);
 
     game.addEntity<Player>(Player({400, 300}, &game));
 

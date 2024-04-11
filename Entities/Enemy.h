@@ -9,11 +9,13 @@
 #include "Entity.h"
 #include "Player.h"
 #include "../Engine/MessageHandler.h"
+#include "../Engine/Utilities/Utils.h"
 
+using namespace Utils::Geometry;
 
 class Enemy : public Entity {
 public:
-    Enemy(Coordinates _coordinates, Game *_game) : Entity(_coordinates, _game) {
+    Enemy(Utils::Geometry::Vector2D _coordinates, Game *_game) : Entity(_coordinates, _game) {
         dimensions = {15, 15};
     }
 

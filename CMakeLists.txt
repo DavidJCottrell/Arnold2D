@@ -21,7 +21,6 @@ add_executable(arnold main.cpp
         Engine/MessageHandler.cpp
         Engine/Utilities/Utils.h
         Engine/Utilities/Utils.cpp
-        Engine/Utilities/Geometry.h
 )
 
 target_link_directories(arnold PRIVATE ${SDL2_LIBRARY_DIR})

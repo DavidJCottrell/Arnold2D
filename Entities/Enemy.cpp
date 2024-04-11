@@ -6,15 +6,15 @@ void Enemy::render(SDL_Renderer *renderer) {
     SDL_Rect shape = {
             (int) coordinates.x,
             (int) coordinates.y,
-            (int) dimensions.w,
-            (int) dimensions.h,
+            (int) dimensions.x,
+            (int) dimensions.y,
     };
     SDL_RenderFillRect(renderer, &shape);
 
     SDL_RenderFillRect(renderer, &shape);
 }
 
-bool isColliding(const Coordinates &a, const Coordinates &b, float tolerance) {
+bool isColliding(const Vector2D &a, const Vector2D &b, float tolerance) {
     return abs(a.x - b.x) < tolerance && abs(a.y - b.y) < tolerance;
 }
 
@@ -43,21 +43,16 @@ void Enemy::update(double deltaTime) {
     }
 
     // Move towards the player
-    Coordinates playerCoordinates{};
+    Vector2D playerCoordinates{};
     for (const auto &entity: game->getEntities()) {
         if (dynamic_cast<Player *>(entity.get())) {
             playerCoordinates = dynamic_cast<Player *>(entity.get())->coordinates;
         }
     }
 
-    float directionX = (float) playerCoordinates.x - coordinates.x;
-    float directionY = (float) playerCoordinates.y - coordinates.y;
-    float distance = sqrt(directionX * directionX + directionY * directionY);
-
-    directionX /= distance;
-    directionY /= distance;
+    Vector2D direction = Utils::Geometry::getUnitVector(coordinates, playerCoordinates);
 
     float speed = 125.0f;
-    coordinates.x += directionX * speed * deltaTime;
-    coordinates.y += directionY * speed * deltaTime;
+    coordinates.x += direction.x * speed * deltaTime;
+    coordinates.y += direction.y * speed * deltaTime;
 }

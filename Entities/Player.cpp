@@ -7,15 +7,9 @@ void Player::registerMovementKey(SDL_Keycode key, bool isHeld) {
         movementKey->second = isHeld;
 }
 
-Projectile Player::spawnProjectile(Coordinates destination) {
-    float directionX = (float) destination.x - coordinates.x;
-    float directionY = (float) destination.y - coordinates.y;
-    auto distance = (float) sqrt(pow(directionX, 2) + pow(directionY, 2));
-
-    directionX /= distance;
-    directionY /= distance;
-
-    return {coordinates, game, {directionX, directionY}};
+Projectile Player::spawnProjectile(Vector2D destination) {
+    Vector2D direction = Utils::Geometry::getUnitVector(coordinates, destination);
+    return {coordinates, game, direction};
 }
 
 void Player::handleEvents(SDL_Event sdlEvent) {
@@ -44,8 +38,8 @@ void Player::render(SDL_Renderer *renderer) {
     SDL_Rect shape = {
             (int) coordinates.x,
             (int) coordinates.y,
-            (int) dimensions.w,
-            (int) dimensions.h,
+            (int) dimensions.x,
+            (int) dimensions.y,
     };
     SDL_RenderFillRect(renderer, &shape);
 }
@@ -56,7 +50,7 @@ void Player::update(double deltaTime) {
         game->endGame();
     }
 
-    Coordinates moveAmount = {0.0f, 0.0f};
+    Geometry::Vector2D moveAmount = {0.0f, 0.0f};
 
     for (auto &movementKey: movementKeys) {
         // Key is being pressed
@@ -72,7 +66,7 @@ void Player::update(double deltaTime) {
         }
     }
 
-    moveAmount = Utils::normalise(moveAmount);
+    moveAmount = Geometry::normalise(moveAmount);
 
     coordinates.x += (float) (moveAmount.x * movementSpeed * deltaTime);
     coordinates.y += (float) (moveAmount.y * movementSpeed * deltaTime);
