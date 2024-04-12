@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_image.h>
 #include <cstdio>
 #include <map>
 #include "../Entity.h"
@@ -16,10 +17,12 @@ class Projectile;
 
 using namespace Utils;
 
-class Player : public Entity {
+class Player : public Entity
+{
 public:
-    Player(Geometry::Vector2D _coordinates, Game *_game) : Entity(_coordinates, _game) {
-        dimensions = {20, 20};
+    Player(Geometry::Vector2D _coordinates, Game *_game) : Entity(_coordinates, _game)
+    {
+        dimensions = {14, 22};
         gunSound = Utils::Audio::loadMedia(("../assets/audio/laser.mp3"));
     }
 
@@ -33,7 +36,6 @@ public:
 
     void takeDamage(double damage) const;
 
-
 private:
     Projectile spawnProjectile(Geometry::Vector2D destination);
 
@@ -46,12 +48,10 @@ private:
     Mix_Chunk *gunSound = nullptr;
 
     std::map<SDL_Keycode, bool> movementKeys = {
-            {SDLK_w, false},
-            {SDLK_a, false},
-            {SDLK_s, false},
-            {SDLK_d, false}
-    };
+        {SDLK_w, false},
+        {SDLK_a, false},
+        {SDLK_s, false},
+        {SDLK_d, false}};
 };
 
-
-#endif //ARNOLD_PLAYER_H
+#endif // ARNOLD_PLAYER_H
