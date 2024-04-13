@@ -12,7 +12,7 @@
 
 class Entity;
 
-#include "../Entities/Entity.h"
+#include "Entity.h"
 
 class Game
 {

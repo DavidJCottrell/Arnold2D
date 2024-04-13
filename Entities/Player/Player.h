@@ -6,7 +6,7 @@
 #include <SDL2/SDL_image.h>
 #include <cstdio>
 #include <map>
-#include "../Entity.h"
+#include "../../Engine/Entity.h"
 #include "../../Engine/Game.h"
 #include "../../Engine/Utilities/Utils.h"
 #include "../../Engine/MessageHandler.h"

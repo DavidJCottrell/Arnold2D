@@ -11,7 +11,7 @@ add_executable(arnold main.cpp
         Engine/Game.h
         Entities/Player/Player.cpp
         Entities/Player/Player.h
-        Entities/Entity.h
+        Engine/Entity.h
         Entities/Enemies/Enemy.cpp
         Entities/Enemies/Enemy.h
         Constants.h

@@ -2,8 +2,8 @@
 #define ARNOLD_MESSAGEHANDLER_H
 
 #include <zmq.hpp>
-#include <iostream>
 #include <string>
+#include <iostream>
 
 #define SERVER_ADDR "tcp://127.0.0.1:5001"
 

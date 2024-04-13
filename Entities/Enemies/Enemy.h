@@ -6,7 +6,7 @@
 #include <SDL2/SDL.h>
 #include <cstdio>
 #include <cstdlib>
-#include "../Entity.h"
+#include "../../Engine/Entity.h"
 #include "../Player/Player.h"
 #include "../../Engine/MessageHandler.h"
 #include "../../Engine/Utilities/Utils.h"

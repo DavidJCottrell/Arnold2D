@@ -3,8 +3,8 @@
 #include "../Entities/Player/Player.h"
 
 bool Game::init(const char *windowTitle,
-                int xPos, int yPos,
-                int width, int height)
+                const int xPos, const int yPos,
+                const int width, const int height)
 {
 
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)

@@ -1,12 +1,8 @@
 #include "TextureManager.h"
 
-TextureManager::TextureManager()
-{
-}
+TextureManager::TextureManager() = default;
 
-TextureManager::~TextureManager()
-{
-}
+TextureManager::~TextureManager() = default;
 
 SDL_Texture *TextureManager::LoadTexture(const char *fileName, SDL_Renderer *renderer)
 {

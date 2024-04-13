@@ -2,19 +2,15 @@
 #define ARNOLD_ENTITY_H
 
 #include <SDL2/SDL.h>
-#include <cstdio>
-#include <memory>
-#include "../Engine/Utilities/Utils.h"
+#include "Utilities/Utils.h"
 
 class Game;
-
-#include "../Engine/Game.h"
 
 using namespace Utils;
 
 class Entity {
 public:
-    Entity(Geometry::Vector2D _coordinates, Game *_game) {
+    Entity(const Geometry::Vector2D _coordinates, Game *_game) {
         coordinates = _coordinates;
         game = _game;
     };

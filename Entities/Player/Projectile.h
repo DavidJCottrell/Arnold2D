@@ -1,7 +1,7 @@
 #ifndef ARNOLD_PROJECTILE_H
 #define ARNOLD_PROJECTILE_H
 
-#include "../Entity.h"
+#include "../../Engine/Entity.h"
 #include "../Enemies/Enemy.h"
 #include "../../Engine/Utilities/Utils.h"
 
