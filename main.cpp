@@ -7,12 +7,12 @@
 #include "Entities/Player/Player.h"
 #include "Entities/Enemies/Enemy.h"
 #include "Engine/MessageHandler.h"
+#include "Engine/Map.h"
 
 void spawnEnemies(Game *game, bool useEnemies)
 {
     while (game->getIsRunning() && useEnemies)
     {
-
         std::random_device rd;
         int randX = std::uniform_int_distribution<int>(0, WINDOW_WIDTH)(rd);
         int randY = std::uniform_int_distribution<int>(0, WINDOW_HEIGHT)(rd);
@@ -36,6 +36,10 @@ int main()
         std::cout << "Failed to initialise SDL" << std::endl;
         return 1;
     }
+
+    Map *map = new Map(game.getRenderer());
+
+    game.map = map;
 
     std::thread enemySpawner(spawnEnemies, &game, true);
 

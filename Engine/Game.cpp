@@ -1,4 +1,5 @@
 #include "Game.h"
+
 #include "../Entities/Player/Player.h"
 
 bool Game::init(const char *windowTitle,
@@ -77,6 +78,8 @@ void Game::update()
 void Game::render()
 {
     SDL_RenderClear(renderer);
+
+    map->DrawMap(renderer);
 
     for (auto &entity : entities)
         entity->render(renderer);

@@ -18,6 +18,10 @@ add_executable(arnold main.cpp
         Entities/Player/Projectile.cpp
         Entities/Player/Projectile.h
         Engine/MessageHandler.h
+        Engine/TextureManager.cpp
+        Engine/TextureManager.h
+        Engine/Map.cpp
+        Engine/Map.h
         Engine/MessageHandler.cpp
         Engine/Utilities/Utils.h
         Engine/Utilities/Utils.cpp

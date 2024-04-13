@@ -8,12 +8,14 @@
 #include <memory>
 #include <algorithm>
 #include "../Constants.h"
+#include "Map.h"
 
 class Entity;
 
 #include "../Entities/Entity.h"
 
-class Game {
+class Game
+{
 public:
     Game();
 
@@ -29,18 +31,22 @@ public:
 
     void clean();
 
-    template<typename T>
-    void addEntity(T entity) {
+    template <typename T>
+    void addEntity(T entity)
+    {
         static_assert(std::is_base_of<Entity, T>::value, "Provided class must be derived from Entity");
         entities.push_back(std::make_unique<T>(std::move(entity)));
     }
 
     [[nodiscard]] const std::vector<std::unique_ptr<Entity>> &getEntities() const;
 
-
     [[nodiscard]] bool getIsRunning() const { return isRunning; }
 
     void endGame() { isRunning = false; }
+
+    SDL_Renderer *getRenderer() { return renderer; }
+
+    Map *map;
 
 private:
     Uint32 lastFrameTime = 0;
@@ -48,13 +54,10 @@ private:
 
     std::vector<std::unique_ptr<Entity>> entities;
 
-private:
-
     void removeMarkedEntities();
 
     SDL_Window *window{};
-    SDL_Renderer *renderer{};
+    SDL_Renderer *renderer;
 };
 
-
-#endif //ARNOLD_GAME_H
+#endif // ARNOLD_GAME_H

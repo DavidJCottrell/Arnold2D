@@ -39,42 +39,23 @@ void Player::handleEvents(SDL_Event sdlEvent)
 
 void Player::render(SDL_Renderer *renderer)
 {
-
     int const scale = 3;
-
-    // 17,
-    // 21,
 
     SDL_Rect source = {
         17,
         21,
-        dimensions.x,
-        dimensions.y,
+        static_cast<int>(dimensions.x),
+        static_cast<int>(dimensions.y),
     };
 
     SDL_Rect dest = {
-        coordinates.x,
-        coordinates.y,
-        dimensions.x * scale,
-        dimensions.y * scale,
+        static_cast<int>(coordinates.x),
+        static_cast<int>(coordinates.y),
+        static_cast<int>(dimensions.x * scale),
+        static_cast<int>(dimensions.y * scale),
     };
 
-    SDL_Surface *tempSurface = IMG_Load("../assets/sprites/characters/player.png");
-    if (tempSurface == nullptr)
-        printf("Failed to load image\n");
-    SDL_Texture *playerTex = SDL_CreateTextureFromSurface(renderer, tempSurface);
-    SDL_FreeSurface(tempSurface);
-
-    SDL_RenderCopy(renderer, playerTex, &source, &dest);
-
-    // SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-    // SDL_Rect shape = {
-    //         (int) coordinates.x,
-    //         (int) coordinates.y,
-    //         (int) dimensions.x,
-    //         (int) dimensions.y,
-    // };
-    // SDL_RenderFillRect(renderer, &shape);
+    TextureManager::DrawTexture(playerTex, renderer, source, dest);
 }
 
 void Player::update(double deltaTime)

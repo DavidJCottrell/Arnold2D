@@ -10,6 +10,7 @@
 #include "../../Engine/Game.h"
 #include "../../Engine/Utilities/Utils.h"
 #include "../../Engine/MessageHandler.h"
+#include "../../Engine/TextureManager.h"
 
 class Projectile;
 
@@ -24,6 +25,7 @@ public:
     {
         dimensions = {14, 22};
         gunSound = Utils::Audio::loadMedia(("../assets/audio/laser.mp3"));
+        playerTex = TextureManager::LoadTexture("../assets/sprites/characters/player.png", _game->getRenderer());
     }
 
     void registerMovementKey(SDL_Keycode key, bool isHeld);
@@ -44,6 +46,8 @@ private:
     double health = 100;
 
     std::vector<SDL_Keycode> currentHeldKeys;
+
+    SDL_Texture *playerTex;
 
     Mix_Chunk *gunSound = nullptr;
 
