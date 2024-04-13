@@ -14,7 +14,7 @@
 
 `sudo apt install libsdl2-image-dev`
 
-### Build and Run
+## Build and Run
 
 `mkdir build && cd build`
 
