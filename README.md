@@ -1,4 +1,6 @@
-## Ubuntu Setup
+# Setup
+
+## Dependencies
 
 ### ZeroMQ:
 
@@ -11,3 +13,9 @@
 `sudo apt install libsdl2-mixer-dev`
 
 `sudo apt install libsdl2-image-dev`
+
+### Build and Run
+
+`mkdir build && cd build`
+
+`cmake .. && cmake --build . && ./arnold`
