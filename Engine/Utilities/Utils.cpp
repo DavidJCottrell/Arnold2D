@@ -23,6 +23,10 @@ Geometry::Vector2D Utils::Geometry::getUnitVector(Vector2D origin, Vector2D dest
     return {directionX, directionY};
 }
 
+bool Geometry::isColliding(const Utils::Geometry::Vector2D &a, const Utils::Geometry::Vector2D &b, float tolerance) {
+    return abs(a.x - b.x) < tolerance && abs(a.y - b.y) < tolerance;
+}
+
 Mix_Chunk *Audio::loadMedia(const char *path) {
     Mix_Chunk *audio = Mix_LoadWAV(path);
     if (audio == nullptr) {

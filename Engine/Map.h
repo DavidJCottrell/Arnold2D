@@ -6,6 +6,17 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "TextureManager.h"
+#include "Utilities/Utils.h"
+
+using namespace Utils::Geometry;
+
+enum TileType {dirt, grass, water};
+
+struct Tile {
+    TileType tileType;
+    Vector2D dimensions;
+    Vector2D coordinates;
+};
 
 class Map {
 public:
@@ -13,18 +24,22 @@ public:
 
     ~Map();
 
-    void LoadMap(int mapArr[20][25]);
+    void LoadMap();
 
     void DrawMap(SDL_Renderer *renderer);
 
+    typedef Tile (*pointer_to_arrays)[25];
+    pointer_to_arrays getMap() {return map;}
+
+
 private:
-    SDL_Rect src{}, dest{};
+    SDL_Rect src{};
 
     SDL_Texture *dirt;
     SDL_Texture *grass;
     SDL_Texture *water;
 
-    int map[20][25]{};
+    Tile map[20][25]{};
 };
 
 #endif

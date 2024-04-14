@@ -14,30 +14,16 @@ void Enemy::render(SDL_Renderer *renderer) {
     SDL_RenderFillRect(renderer, &shape);
 }
 
-bool isColliding(const Vector2D &a, const Vector2D &b, float tolerance) {
-    return abs(a.x - b.x) < tolerance && abs(a.y - b.y) < tolerance;
-}
-
 void Enemy::update(double deltaTime) {
 
     float tolerance = 20.0f;
+
+    // Check for player collisions
     for (const auto &entity: game->getEntities()) {
-        auto entityCoordinates = entity->coordinates;
-
-        // Check for projectile collisions
-        if (auto *pProjectile = dynamic_cast<Projectile *>(entity.get())) {
-            if (isColliding(coordinates, entityCoordinates, tolerance)) {
-                isMarkedForRemoval = true;
-                pProjectile->isMarkedForRemoval = true;
-            }
-        }
-
-        // Check for player collisions
         if (auto *pPlayer = dynamic_cast<Player *>(entity.get())) {
-            if (isColliding(coordinates, entityCoordinates, tolerance)) {
+            if (Geometry::isColliding(coordinates, pPlayer->coordinates, tolerance)) {
                 isMarkedForRemoval = true;
                 pPlayer->takeDamage(25);
-                MessageHandler::getInstance().SendMsg("Took Damage");
             }
         }
     }
@@ -53,6 +39,6 @@ void Enemy::update(double deltaTime) {
     Vector2D direction = Utils::Geometry::getUnitVector(coordinates, playerCoordinates);
 
     float speed = 125.0f;
-    coordinates.x += direction.x * speed * deltaTime;
-    coordinates.y += direction.y * speed * deltaTime;
+    coordinates.x += (float)(direction.x * speed * deltaTime);
+    coordinates.y += (float)(direction.y * speed * deltaTime);
 }

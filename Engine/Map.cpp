@@ -1,69 +1,52 @@
 #include "Map.h"
 
-int lvl1[23][25] = {
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-};
+
 
 Map::Map(SDL_Renderer *renderer) {
     dirt = TextureManager::LoadTexture("../assets/map/dirt.png", renderer);
     grass = TextureManager::LoadTexture("../assets/map/grass.png", renderer);
     water = TextureManager::LoadTexture("../assets/map/water.png", renderer);
 
-    LoadMap(lvl1);
+    LoadMap();
 
     src.x = src.y = 0;
-    src.w = dest.w = 32;
-    src.h = dest.h = 32;
-
-    dest.x = dest.y = 0;
+    src.w = 32;
+    src.h = 32;
 }
 
 Map::~Map() = default;
 
-void Map::LoadMap(int mapArr[20][25]) {
+void Map::LoadMap() {
     for (int row = 0; row < 20; row++) {
         for (int column = 0; column < 25; column++) {
-            map[row][column] = mapArr[row][column];
+            map[row][column] = Tile();
+            // Perimeter of water
+            if(row == 0 || row == 19 || column == 0 || column == 24) map[row][column].tileType = TileType::water;
+            else map[row][column].tileType = TileType::dirt;
+            map[row][column].coordinates = {(float)(column * 32), (float)(row * 32)};
+            map[row][column].dimensions = {32, 32};
         }
     }
 }
 
 void Map::DrawMap(SDL_Renderer *renderer) {
-    int type = 0;
     for (int row = 0; row < 20; row++) {
         for (int column = 0; column < 25; column++) {
-            type = map[row][column];
-            dest.x = column * 32;
-            dest.y = row * 32;
-
-            switch (type) {
-                case 0:
+            SDL_Rect dest{
+                    static_cast<int>(map[row][column].coordinates.x),
+                    static_cast<int>(map[row][column].coordinates.y),
+                    static_cast<int>(map[row][column].dimensions.x),
+                    static_cast<int>(map[row][column].dimensions.y)
+            };
+            switch (map[row][column].tileType) {
+                case TileType::dirt:
                     TextureManager::DrawTexture(dirt, renderer, src, dest);
                     break;
-                case 1:
-                    TextureManager::DrawTexture(water, renderer, src, dest);
-                    break;
-                case 2:
+                case TileType::grass:
                     TextureManager::DrawTexture(grass, renderer, src, dest);
+                    break;
+                case TileType::water:
+                    TextureManager::DrawTexture(water, renderer, src, dest);
                     break;
                 default:
                     break;

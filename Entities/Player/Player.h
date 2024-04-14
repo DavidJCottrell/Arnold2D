@@ -23,7 +23,7 @@ class Player : public Entity
 public:
     Player(Geometry::Vector2D _coordinates, Game *_game) : Entity(_coordinates, _game)
     {
-        dimensions = {14, 22};
+        dimensions = {15, 15};
         gunSound = Utils::Audio::loadMedia(("../assets/audio/laser.mp3"));
         playerTex = TextureManager::LoadTexture("../assets/sprites/characters/player.png", _game->getRenderer());
     }
@@ -42,6 +42,8 @@ private:
     Projectile spawnProjectile(Geometry::Vector2D destination);
 
     double movementSpeed = 150.0;
+
+    bool isCollidingWithWall(Geometry::Vector2D potentialCoordinates);
 
     double health = 100;
 

@@ -16,6 +16,8 @@ namespace Utils {
         Vector2D normalise(Vector2D coordinates);
 
         Vector2D getUnitVector(Vector2D origin, Vector2D destination);
+
+        bool isColliding(const Vector2D &a, const Vector2D &b, float tolerance);
     }
 
     namespace Audio {

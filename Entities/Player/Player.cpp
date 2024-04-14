@@ -62,6 +62,21 @@ void Player::render(SDL_Renderer *renderer) {
 
     SDL_RenderFillRect(renderer, &shape);
 }
+bool Player::isCollidingWithWall(Geometry::Vector2D potentialCoordinates){
+    float tolerance = 20.0f;
+    // Wall collisions
+    Map::pointer_to_arrays map = game->map->getMap();
+    for (int row = 0; row < 20; row++) {
+        for (int column = 0; column < 25; column++) {
+            if(map[row][column].tileType == TileType::water){
+                if(Geometry::isColliding(potentialCoordinates, map[row][column].coordinates, tolerance)){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
 
 void Player::update(double deltaTime) {
     // if (health <= 0)
@@ -75,14 +90,32 @@ void Player::update(double deltaTime) {
     for (auto &movementKey: movementKeys) {
         // Key is being pressed
         if (movementKey.second) {
-            if (movementKey.first == SDLK_w)
+            if (movementKey.first == SDLK_w){
                 moveAmount.y -= 1.0f;
-            if (movementKey.first == SDLK_a)
+                if(isCollidingWithWall({(float) coordinates.x, coordinates.y + (float) (moveAmount.y * movementSpeed * deltaTime)})){
+                    moveAmount.y = 0.0f;
+                }
+            }
+            if (movementKey.first == SDLK_a){
                 moveAmount.x -= 1.0f;
-            if (movementKey.first == SDLK_s)
+                if(isCollidingWithWall({coordinates.x + (float) (moveAmount.x * movementSpeed * deltaTime), coordinates.y })){
+                    moveAmount.x = 0.0f;
+                }
+            }
+            if (movementKey.first == SDLK_s){
                 moveAmount.y += 1.0f;
-            if (movementKey.first == SDLK_d)
+                if(isCollidingWithWall({(float) coordinates.x, coordinates.y + (float) (moveAmount.y * movementSpeed * deltaTime)})){
+                    moveAmount.y = 0.0f;
+                }
+            }
+
+            if (movementKey.first == SDLK_d){
                 moveAmount.x += 1.0f;
+                if(isCollidingWithWall({coordinates.x + (float) (moveAmount.x * movementSpeed * deltaTime), coordinates.y })){
+                    moveAmount.x = 0.0f;
+                }
+            }
+
         }
     }
 

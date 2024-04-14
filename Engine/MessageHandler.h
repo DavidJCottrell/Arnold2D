@@ -5,7 +5,9 @@
 #include <string>
 #include <iostream>
 
-#define SERVER_ADDR "tcp://127.0.0.1:5001"
+//192.168.7.186:
+
+#define SERVER_ADDR "tcp://192.168.7.186:5001"
 
 class MessageHandler {
 

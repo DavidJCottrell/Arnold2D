@@ -46,7 +46,7 @@ public:
 
     SDL_Renderer *getRenderer() { return renderer; }
 
-    Map *map;
+    Map *map{};
 
 private:
     Uint32 lastFrameTime = 0;
@@ -57,7 +57,7 @@ private:
     void removeMarkedEntities();
 
     SDL_Window *window{};
-    SDL_Renderer *renderer;
+    SDL_Renderer *renderer{};
 };
 
 #endif // ARNOLD_GAME_H
