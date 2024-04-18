@@ -17,7 +17,9 @@ public:
     Player(const Vector2D coordinates, Game* game) : Entity(coordinates, game, 40)
     {
         dimensions = {20, 20};
-        gunSound = Audio::loadMedia(("../assets/audio/laser.mp3"));
+        laserRifleSound = Audio::loadMedia(("../assets/audio/laser.mp3"));
+        shotgunSound = Audio::loadMedia(("../assets/audio/shotgun.mp3"));
+        uziSound = Audio::loadMedia(("../assets/audio/uzi.wav"));
         playerTex = TextureManager::LoadTexture("../assets/sprites/characters/player.png", game->getRenderer());
     }
 
@@ -44,7 +46,10 @@ private:
 
     SDL_Texture* playerTex;
 
-    Mix_Chunk* gunSound = nullptr;
+    Mix_Chunk* laserRifleSound = nullptr;
+    Mix_Chunk* shotgunSound = nullptr;
+    Mix_Chunk* uziSound = nullptr;
+
 
     std::thread uziThread;
 

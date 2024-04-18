@@ -22,48 +22,46 @@ void Player::handleEvents(const SDL_Event& sdlEvent)
         break;
 
     case SDL_MOUSEBUTTONDOWN:
+        if (sdlEvent.button.button == SDL_BUTTON_LEFT)
         {
-            Audio::playSound(gunSound);
-
             mouseHeld = true;
 
             int mouseX = 0, mouseY = 0;
             SDL_GetMouseState(&mouseX, &mouseY);
             mouseCoords = {static_cast<float>(mouseX), static_cast<float>(mouseY)};
 
-
             switch (weaponType)
             {
             case rifle:
-                Weapon::fireRifle(coordinates, mouseCoords, game);
+                Weapon::fireRifle(coordinates, mouseCoords, game, laserRifleSound);
                 break;
             case shotgun:
-                Weapon::fireShotgun(coordinates, mouseCoords, game);
+                Weapon::fireShotgun(coordinates, mouseCoords, game, shotgunSound);
                 break;
             case uzi:
-                std::cout << mouseCoords.x << " - " << mouseCoords.y << std::endl;
-                uziThread = std::thread{Weapon::fireUzi, &coordinates, &mouseCoords, game, &mouseHeld};
+                uziThread = std::thread{Weapon::fireUzi, &coordinates, &mouseCoords, game, &mouseHeld, uziSound};
                 break;
             default:
                 break;
             }
 
             MessageHandler::getInstance().SendMsg("Pew");
-            break;
         }
-    case SDL_MOUSEBUTTONUP:
-        mouseHeld = false;
-        if (uziThread.joinable()) uziThread.join();
         break;
-
+    case SDL_MOUSEBUTTONUP:
+        if (sdlEvent.button.button == SDL_BUTTON_LEFT)
+        {
+            mouseHeld = false;
+            if (uziThread.joinable()) uziThread.join();
+        }
+        break;
     case SDL_MOUSEMOTION:
         {
             int mouseX = 0, mouseY = 0;
             SDL_GetMouseState(&mouseX, &mouseY);
             mouseCoords = {static_cast<float>(mouseX), static_cast<float>(mouseY)};
-            std::cout << mouseCoords.x << " - " << mouseCoords.y << std::endl;
-            break;
         }
+        break;
     default:
         break;
     }

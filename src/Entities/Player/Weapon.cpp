@@ -1,7 +1,9 @@
 #include <Arnold.h>
 
-void Weapon::fireShotgun(const Vector2D origin, const Vector2D target, Game* game)
+void Weapon::fireShotgun(const Vector2D origin, const Vector2D target, Game* game, Mix_Chunk* sound)
 {
+    Audio::playSound(sound);
+
     constexpr int spread = 4;
     constexpr int range = 150.0f;
 
@@ -46,17 +48,20 @@ void Weapon::fireShotgun(const Vector2D origin, const Vector2D target, Game* gam
     }
 }
 
-void Weapon::fireRifle(const Vector2D origin, const Vector2D target, Game* game)
+void Weapon::fireRifle(const Vector2D origin, const Vector2D target, Game* game, Mix_Chunk* sound)
 {
+    Audio::playSound(sound);
     constexpr int range = 325.0f;
     game->addEntity(Projectile(origin, game, getUnitVector(origin, target), range));
 }
 
-void Weapon::fireUzi(const Vector2D* origin, const Vector2D* target, Game* game, const bool* mouseHeld)
+void Weapon::fireUzi(const Vector2D* origin, const Vector2D* target, Game* game, const bool* mouseHeld,
+                     Mix_Chunk* sound)
 {
     while (*mouseHeld)
     {
         constexpr int range = 175.0f;
+        Audio::playSound(sound);
         game->addEntity(Projectile(*origin, game, getUnitVector(*origin, *target), range));
         std::this_thread::sleep_for(std::chrono::milliseconds(75));
     }
