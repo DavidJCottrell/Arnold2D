@@ -7,31 +7,51 @@ void Player::registerMovementKey(const SDL_Keycode key, const bool isHeld)
         movementKey->second = isHeld;
 }
 
-Projectile Player::spawnProjectile(const Vector2D destination)
-{
-    Vector2D direction = getUnitVector(coordinates, destination);
-    return {coordinates, game, direction};
-}
-
 void Player::handleEvents(const SDL_Event& sdlEvent)
 {
     switch (sdlEvent.type)
     {
     case SDL_KEYDOWN:
         registerMovementKey(sdlEvent.key.keysym.sym, true);
+        if (sdlEvent.key.keysym.sym == SDLK_1) weaponType = rifle;
+        else if (sdlEvent.key.keysym.sym == SDLK_2) weaponType = shotgun;
+        else if (sdlEvent.key.keysym.sym == SDLK_3) weaponType = uzi;
         break;
     case SDL_KEYUP:
         registerMovementKey(sdlEvent.key.keysym.sym, false);
         break;
     case SDL_MOUSEBUTTONDOWN:
         {
+            Audio::playSound(gunSound);
+
+            mouseHeld = true;
+
             int mouseX = 0, mouseY = 0;
             SDL_GetMouseState(&mouseX, &mouseY);
-            game->addEntity(spawnProjectile({static_cast<float>(mouseX), static_cast<float>(mouseY)}));
+            const Vector2D target{static_cast<float>(mouseX), static_cast<float>(mouseY)};
+
+            switch (weaponType)
+            {
+            case rifle:
+                Weapon::fireRifle(coordinates, target, game);
+                break;
+            case shotgun:
+                Weapon::fireShotgun(coordinates, target, game);
+                break;
+            case uzi:
+                uziThread = std::thread{Weapon::fireUzi, &coordinates, &target, game, &mouseHeld};
+                break;
+            default:
+                break;
+            }
+
             MessageHandler::getInstance().SendMsg("Pew");
-            Audio::playSound(gunSound);
             break;
         }
+    case SDL_MOUSEBUTTONUP:
+        mouseHeld = false;
+        if (uziThread.joinable()) uziThread.join();
+        break;
     default:
         break;
     }
@@ -89,8 +109,11 @@ bool Player::isCollidingWithWall(Vector2D potentialCoordinates) const
     return false;
 }
 
-void Player::update(double deltaTime)
+void Player::update(const double deltaTime)
 {
+    if (mouseHeld)
+    {
+    }
     if (health <= 0)
     {
         MessageHandler::getInstance().SendMsg("Game Over");
@@ -99,22 +122,21 @@ void Player::update(double deltaTime)
 
     Vector2D moveAmount = {0.0f, 0.0f};
 
-    for (auto& movementKey : movementKeys)
+    for (auto& [key, held] : movementKeys)
     {
-        // Key is being pressed
-        if (movementKey.second)
+        if (held)
         {
-            if (movementKey.first == SDLK_w)
+            if (key == SDLK_w)
             {
                 moveAmount.y -= 1.0f;
                 if (isCollidingWithWall({
-                    (float)coordinates.x, coordinates.y + static_cast<float>(moveAmount.y * movementSpeed * deltaTime)
+                    coordinates.x, coordinates.y + static_cast<float>(moveAmount.y * movementSpeed * deltaTime)
                 }))
                 {
                     moveAmount.y = 0.0f;
                 }
             }
-            if (movementKey.first == SDLK_a)
+            if (key == SDLK_a)
             {
                 moveAmount.x -= 1.0f;
                 if (isCollidingWithWall({
@@ -124,18 +146,18 @@ void Player::update(double deltaTime)
                     moveAmount.x = 0.0f;
                 }
             }
-            if (movementKey.first == SDLK_s)
+            if (key == SDLK_s)
             {
                 moveAmount.y += 1.0f;
                 if (isCollidingWithWall({
-                    (float)coordinates.x, coordinates.y + static_cast<float>(moveAmount.y * movementSpeed * deltaTime)
+                    coordinates.x, coordinates.y + static_cast<float>(moveAmount.y * movementSpeed * deltaTime)
                 }))
                 {
                     moveAmount.y = 0.0f;
                 }
             }
 
-            if (movementKey.first == SDLK_d)
+            if (key == SDLK_d)
             {
                 moveAmount.x += 1.0f;
                 if (isCollidingWithWall({

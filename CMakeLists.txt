@@ -26,10 +26,12 @@ add_executable(arnold src/main.cpp
         include/Map.h
         src/Engine/MessageHandler.cpp
         include/Utils.h
-        src/Engine/Utilities/Utils.cpp
+        src/Engine/Utils.cpp
         src/Entities/Enemies/Juggernaut.cpp
         include/Juggernaut.h
         include/Arnold.h
+        include/Weapon.h
+        src/Entities/Player/Weapon.cpp
 )
 
 target_link_directories(arnold PRIVATE ${SDL2_LIBRARY_DIR})

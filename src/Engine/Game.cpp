@@ -24,6 +24,8 @@ bool Game::init(const char* windowTitle,
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
+    map = new Map(renderer);
+
     isRunning = true;
     return true;
 }

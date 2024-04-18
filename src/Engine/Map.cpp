@@ -1,5 +1,4 @@
-#include "../include/Map.h"
-
+#include <Arnold.h>
 
 Map::Map(SDL_Renderer* renderer)
 {
@@ -18,33 +17,47 @@ Map::~Map() = default;
 
 void Map::LoadMap()
 {
-    for (int row = 0; row < 20; row++)
+    std::ifstream levelFile("../assets/map/level_1.csv");
+
+    if (!levelFile.is_open()) throw std::runtime_error("Could not open level file");
+    if (!levelFile.good()) throw std::runtime_error("Error when using level file");
+
+    std::string line, tile;
+
+    int rowCount = 0;
+    while (std::getline(levelFile, line))
     {
-        for (int column = 0; column < 25; column++)
+        std::stringstream ss(line);
+        int columnCount = 0;
+
+        while (getline(ss, tile, ','))
         {
-            map[row][column] = Tile();
-            // Perimeter of water
-            if (row == 0 || row == 19 || column == 0 || column == 24) map[row][column].tileType = TileType::water;
-            else map[row][column].tileType = TileType::dirt;
-            map[row][column].coordinates = {static_cast<float>(column * 32), static_cast<float>(row * 32)};
-            map[row][column].dimensions = {32, 32};
+            map[rowCount][columnCount] = Tile();
+            map[rowCount][columnCount].tileType = static_cast<TileType>(stoi(tile));
+            map[rowCount][columnCount].dimensions = {32, 32};
+            map[rowCount][columnCount].coordinates = {
+                static_cast<float>(columnCount * 32), static_cast<float>(rowCount * 32)
+            };
+            columnCount++;
         }
+        rowCount++;
     }
+    levelFile.close();
 }
 
 void Map::DrawMap(SDL_Renderer* renderer) const
 {
-    for (int row = 0; row < 20; row++)
+    for (const auto& row : map)
     {
-        for (int column = 0; column < 25; column++)
+        for (const auto& column : row)
         {
-            SDL_Rect dest{
-                static_cast<int>(map[row][column].coordinates.x),
-                static_cast<int>(map[row][column].coordinates.y),
-                static_cast<int>(map[row][column].dimensions.x),
-                static_cast<int>(map[row][column].dimensions.y)
+            const SDL_Rect dest{
+                static_cast<int>(column.coordinates.x),
+                static_cast<int>(column.coordinates.y),
+                static_cast<int>(column.dimensions.x),
+                static_cast<int>(column.dimensions.y)
             };
-            switch (map[row][column].tileType)
+            switch (column.tileType)
             {
             case TileType::dirt:
                 // TextureManager::DrawTexture(dirt, renderer, src, dest);

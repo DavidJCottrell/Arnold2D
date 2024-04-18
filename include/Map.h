@@ -3,11 +3,11 @@
 
 #pragma once
 
-#include <Arnold.h>
+#include <fstream>
 
 using namespace Utils::Geometry;
 
-enum TileType { dirt, grass, water };
+enum TileType { dirt = 0, water = 1, grass = 2 };
 
 struct Tile
 {
@@ -15,7 +15,6 @@ struct Tile
     Vector2D dimensions;
     Vector2D coordinates;
 };
-
 
 class Map
 {

@@ -8,11 +8,12 @@ using namespace Utils::Geometry;
 class Projectile : public Entity
 {
 public:
-    Projectile(Vector2D coordinates, Game* game, Vector2D destination
+    Projectile(const Vector2D coordinates, Game* game, const Vector2D destination, const float range
     ) : Entity(coordinates, game, -1)
     {
-        dimensions = {10, 10};
         this->destination = destination;
+        this->range = range;
+        dimensions = {10, 10};
         origin = coordinates;
     }
 

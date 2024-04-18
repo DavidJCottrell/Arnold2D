@@ -4,14 +4,17 @@
 #pragma once
 
 #include <map>
+#include <thread>
 #include <vector>
 
 using namespace Utils::Geometry;
 
-class Player : public Entity
+enum WeaponType { rifle, shotgun, uzi };
+
+class Player final : public Entity
 {
 public:
-    Player(Vector2D coordinates, Game* game) : Entity(coordinates, game, 40)
+    Player(const Vector2D coordinates, Game* game) : Entity(coordinates, game, 40)
     {
         dimensions = {20, 20};
         gunSound = Audio::loadMedia(("../assets/audio/laser.mp3"));
@@ -30,7 +33,8 @@ public:
 
 private:
     const int healthCapacitity = 40;
-    Projectile spawnProjectile(Vector2D destination);
+
+    WeaponType weaponType = rifle;
 
     const float movementSpeed = 150.0f;
 
@@ -42,6 +46,9 @@ private:
 
     Mix_Chunk* gunSound = nullptr;
 
+    std::thread uziThread;
+
+    bool mouseHeld = false;
     std::map<SDL_Keycode, bool> movementKeys = {
         {SDLK_w, false},
         {SDLK_a, false},

@@ -36,7 +36,7 @@ void Juggernaut::render(SDL_Renderer* renderer)
     SDL_RenderFillRect(renderer, &healthBar);
 }
 
-void Juggernaut::update(double deltaTime)
+void Juggernaut::update(const double deltaTime)
 {
     if (health <= 0) isMarkedForRemoval = true;
 
@@ -63,9 +63,9 @@ void Juggernaut::update(double deltaTime)
         }
     }
 
-    const Vector2D direction = getUnitVector(coordinates, playerCoordinates);
+    const auto [dx, dy] = getUnitVector(coordinates, playerCoordinates);
 
 
-    coordinates.x += static_cast<float>(direction.x * movementSpeed * deltaTime);
-    coordinates.y += static_cast<float>(direction.y * movementSpeed * deltaTime);
+    coordinates.x += static_cast<float>(dx * movementSpeed * deltaTime);
+    coordinates.y += static_cast<float>(dy * movementSpeed * deltaTime);
 }

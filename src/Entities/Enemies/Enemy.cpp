@@ -36,7 +36,7 @@ void Enemy::render(SDL_Renderer* renderer)
     SDL_RenderFillRect(renderer, &healthBar);
 }
 
-void Enemy::update(double deltaTime)
+void Enemy::update(const double deltaTime)
 {
     if (health <= 0) isMarkedForRemoval = true;
 

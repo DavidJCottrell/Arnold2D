@@ -6,6 +6,11 @@
 class Entity;
 class Map;
 
+namespace Utils::Geometry
+{
+    struct Vector2D;
+}
+
 #include "Constants.h"
 #include "Game.h"
 #include "Utils.h"
@@ -15,6 +20,7 @@ class Map;
 #include "Map.h"
 
 #include "Projectile.h"
+#include "Weapon.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Juggernaut.h"
