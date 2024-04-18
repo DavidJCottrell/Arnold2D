@@ -1,25 +1,18 @@
 #ifndef ARNOLD_GAME_H
 #define ARNOLD_GAME_H
 
-#include <SDL2/SDL.h>
-#include <cstdio>
-#include <vector>
-#include <iostream>
+#pragma once
+
 #include <memory>
-#include <algorithm>
-#include "../Constants.h"
-#include "Map.h"
-
-class Entity;
-
-#include "Entity.h"
+#include <vector>
+#include <SDL2/SDL.h>
 
 class Game
 {
 public:
     Game();
 
-    bool init(const char *windowTitle,
+    bool init(const char* windowTitle,
               int xPos, int yPos,
               int width, int height);
 
@@ -29,7 +22,7 @@ public:
 
     void render();
 
-    void clean();
+    void clean() const;
 
     template <typename T>
     void addEntity(T entity)
@@ -38,15 +31,13 @@ public:
         entities.push_back(std::make_unique<T>(std::move(entity)));
     }
 
-    [[nodiscard]] const std::vector<std::unique_ptr<Entity>> &getEntities() const;
-
+    [[nodiscard]] const std::vector<std::unique_ptr<Entity>>& getEntities() const;
     [[nodiscard]] bool getIsRunning() const { return isRunning; }
+    [[nodiscard]] SDL_Renderer* getRenderer() const { return renderer; }
 
     void endGame() { isRunning = false; }
 
-    SDL_Renderer *getRenderer() { return renderer; }
-
-    Map *map{};
+    Map* map{};
 
 private:
     Uint32 lastFrameTime = 0;
@@ -56,8 +47,8 @@ private:
 
     void removeMarkedEntities();
 
-    SDL_Window *window{};
-    SDL_Renderer *renderer{};
+    SDL_Window* window{};
+    SDL_Renderer* renderer{};
 };
 
 #endif // ARNOLD_GAME_H

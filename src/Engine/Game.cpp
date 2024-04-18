@@ -1,12 +1,9 @@
-#include "Game.h"
+#include<Arnold.h>
 
-#include "../Entities/Player/Player.h"
-
-bool Game::init(const char *windowTitle,
+bool Game::init(const char* windowTitle,
                 const int xPos, const int yPos,
                 const int width, const int height)
 {
-
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
         fprintf(stderr, "Failed to init SDL!\n");
@@ -42,9 +39,9 @@ void Game::handleEvents()
             return;
         }
         // Retrieve the player object from the entities list and handle the user's player input
-        for (const auto &entity : entities)
+        for (const auto& entity : entities)
         {
-            if (auto *player = dynamic_cast<Player *>(entity.get()))
+            if (auto* player = dynamic_cast<Player*>(entity.get()))
             {
                 player->handleEvents(sdlEvent);
                 break;
@@ -55,8 +52,10 @@ void Game::handleEvents()
 
 void Game::removeMarkedEntities()
 {
-    entities.erase(std::remove_if(entities.begin(), entities.end(), [](const std::unique_ptr<Entity> &entity)
-                                  { return entity->isMarkedForRemoval; }),
+    entities.erase(std::remove_if(entities.begin(), entities.end(), [](const std::unique_ptr<Entity>& entity)
+                   {
+                       return entity->isMarkedForRemoval;
+                   }),
                    entities.end());
 }
 
@@ -71,7 +70,7 @@ void Game::update()
 
     removeMarkedEntities();
 
-    for (auto &entity : entities)
+    for (const auto& entity : entities)
         entity->update(deltaTime);
 }
 
@@ -81,14 +80,14 @@ void Game::render()
 
     map->DrawMap(renderer);
 
-    for (auto &entity : entities)
+    for (const auto& entity : entities)
         entity->render(renderer);
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderPresent(renderer);
 }
 
-void Game::clean()
+void Game::clean() const
 {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
@@ -96,7 +95,7 @@ void Game::clean()
     printf("Game cleaned\n");
 }
 
-const std::vector<std::unique_ptr<Entity>> &Game::getEntities() const
+const std::vector<std::unique_ptr<Entity>>& Game::getEntities() const
 {
     return entities;
 }
