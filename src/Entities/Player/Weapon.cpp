@@ -3,7 +3,7 @@
 void Weapon::fireShotgun(const Vector2D origin, const Vector2D target, Game* game)
 {
     constexpr int spread = 4;
-    constexpr int range = 125.0f;
+    constexpr int range = 150.0f;
 
     const float deltaX = static_cast<float>(target.x) - origin.x;
     const float deltaY = static_cast<float>(target.y) - origin.y;
@@ -57,8 +57,7 @@ void Weapon::fireUzi(const Vector2D* origin, const Vector2D* target, Game* game,
     while (*mouseHeld)
     {
         constexpr int range = 175.0f;
-        std::cout << target->x << " - " << target->y << std::endl;
         game->addEntity(Projectile(*origin, game, getUnitVector(*origin, *target), range));
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(75));
     }
 }

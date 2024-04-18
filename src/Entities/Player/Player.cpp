@@ -20,6 +20,7 @@ void Player::handleEvents(const SDL_Event& sdlEvent)
     case SDL_KEYUP:
         registerMovementKey(sdlEvent.key.keysym.sym, false);
         break;
+
     case SDL_MOUSEBUTTONDOWN:
         {
             Audio::playSound(gunSound);
@@ -28,18 +29,20 @@ void Player::handleEvents(const SDL_Event& sdlEvent)
 
             int mouseX = 0, mouseY = 0;
             SDL_GetMouseState(&mouseX, &mouseY);
-            const Vector2D target{static_cast<float>(mouseX), static_cast<float>(mouseY)};
+            mouseCoords = {static_cast<float>(mouseX), static_cast<float>(mouseY)};
+
 
             switch (weaponType)
             {
             case rifle:
-                Weapon::fireRifle(coordinates, target, game);
+                Weapon::fireRifle(coordinates, mouseCoords, game);
                 break;
             case shotgun:
-                Weapon::fireShotgun(coordinates, target, game);
+                Weapon::fireShotgun(coordinates, mouseCoords, game);
                 break;
             case uzi:
-                uziThread = std::thread{Weapon::fireUzi, &coordinates, &target, game, &mouseHeld};
+                std::cout << mouseCoords.x << " - " << mouseCoords.y << std::endl;
+                uziThread = std::thread{Weapon::fireUzi, &coordinates, &mouseCoords, game, &mouseHeld};
                 break;
             default:
                 break;
@@ -52,6 +55,15 @@ void Player::handleEvents(const SDL_Event& sdlEvent)
         mouseHeld = false;
         if (uziThread.joinable()) uziThread.join();
         break;
+
+    case SDL_MOUSEMOTION:
+        {
+            int mouseX = 0, mouseY = 0;
+            SDL_GetMouseState(&mouseX, &mouseY);
+            mouseCoords = {static_cast<float>(mouseX), static_cast<float>(mouseY)};
+            std::cout << mouseCoords.x << " - " << mouseCoords.y << std::endl;
+            break;
+        }
     default:
         break;
     }
@@ -111,9 +123,6 @@ bool Player::isCollidingWithWall(Vector2D potentialCoordinates) const
 
 void Player::update(const double deltaTime)
 {
-    if (mouseHeld)
-    {
-    }
     if (health <= 0)
     {
         MessageHandler::getInstance().SendMsg("Game Over");

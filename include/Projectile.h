@@ -24,7 +24,7 @@ public:
 private:
     Vector2D destination{};
     Vector2D origin{};
-    const float movementSpeed = 400.0f;
+    const float movementSpeed = 450.0f;
     float range = 300.0f;
 };
 

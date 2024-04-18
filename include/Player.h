@@ -48,6 +48,9 @@ private:
 
     std::thread uziThread;
 
+
+    Vector2D mouseCoords{};
+
     bool mouseHeld = false;
     std::map<SDL_Keycode, bool> movementKeys = {
         {SDLK_w, false},
