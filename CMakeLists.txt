@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22.1)
-project(arnold)
+project(Arnold2D)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -10,7 +10,7 @@ find_library(ZeroMQ czmq REQUIRED)
 
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
-add_executable(arnold src/main.cpp
+add_executable(Arnold2D src/main.cpp
         src/Engine/Game.cpp
         include/Game.h
         src/Entities/Player/Player.cpp
@@ -40,5 +40,5 @@ add_executable(arnold src/main.cpp
         include/HealthPickup.h
 )
 
-target_link_directories(arnold PRIVATE ${SDL2_LIBRARY_DIR})
-target_link_libraries(arnold PUBLIC SDL2 SDL2_mixer SDL2_image czmq zmq)
+target_link_directories(Arnold2D PRIVATE ${SDL2_LIBRARY_DIR})
+target_link_libraries(Arnold2D PUBLIC SDL2 SDL2_mixer SDL2_image czmq zmq)
