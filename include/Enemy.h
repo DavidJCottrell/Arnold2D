@@ -5,22 +5,20 @@
 
 using namespace Utils::Geometry;
 
-class Enemy final : public Entity
-{
+class Enemy final : public Entity {
 public:
-    Enemy(const Vector2D coordinates, Game* game) : Entity(coordinates, game, 40)
-    {
+    Enemy(const Vector2D coordinates, Game *game) : Entity(coordinates, game, 40) {
         dimensions = {20, 20};
     }
 
     void takeDamage() const;
 
-    void render(SDL_Renderer* renderer) override;
+    void render(SDL_Renderer *renderer) override;
 
     void update(double deltaTime) override;
 
 private:
-    const int healthCapacitity = 40;
+    const int healthCapacity = 40;
 };
 
 

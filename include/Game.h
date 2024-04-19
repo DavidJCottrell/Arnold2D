@@ -7,12 +7,11 @@
 #include <vector>
 #include <SDL2/SDL.h>
 
-class Game
-{
+class Game {
 public:
     Game();
 
-    bool init(const char* windowTitle,
+    bool init(const char *windowTitle,
               int xPos, int yPos,
               int width, int height);
 
@@ -24,20 +23,23 @@ public:
 
     void clean() const;
 
-    template <typename T>
-    void addEntity(T entity)
-    {
+    template<typename T>
+    void addEntity(T entity) {
         static_assert(std::is_base_of<Entity, T>::value, "Provided class must be derived from Entity");
         entities.push_back(std::make_unique<T>(std::move(entity)));
     }
 
-    [[nodiscard]] const std::vector<std::unique_ptr<Entity>>& getEntities() const;
+    [[nodiscard]] const std::vector<std::unique_ptr<Entity>> &getEntities() const;
+
     [[nodiscard]] bool getIsRunning() const { return isRunning; }
-    [[nodiscard]] SDL_Renderer* getRenderer() const { return renderer; }
+
+    [[nodiscard]] SDL_Renderer *getRenderer() const { return renderer; }
 
     void endGame() { isRunning = false; }
 
-    Map* map{};
+    Player *getPlayer();
+
+    Map *map{};
 
 private:
     Uint32 lastFrameTime = 0;
@@ -47,8 +49,8 @@ private:
 
     void removeMarkedEntities();
 
-    SDL_Window* window{};
-    SDL_Renderer* renderer{};
+    SDL_Window *window{};
+    SDL_Renderer *renderer{};
 };
 
 #endif // ARNOLD_GAME_H

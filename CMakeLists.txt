@@ -32,6 +32,10 @@ add_executable(arnold src/main.cpp
         include/Arnold.h
         include/Weapon.h
         src/Entities/Player/Weapon.cpp
+        src/Entities/Pickups/WeaponPickup.cpp
+        include/WeaponPickup.h
+        src/Entities/Pickups/HealthPickup.cpp
+        include/HealthPickup.h
 )
 
 target_link_directories(arnold PRIVATE ${SDL2_LIBRARY_DIR})

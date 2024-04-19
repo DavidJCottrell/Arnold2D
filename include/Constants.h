@@ -6,8 +6,6 @@
 #define FPS 60
 #define FRAME_TARGET_TIME (1000 / FPS)
 
-#define ENEMY_SPAWN_DELAY 2000 // ms
-
 #define WINDOW_HEIGHT 640
 #define WINDOW_WIDTH 800
 

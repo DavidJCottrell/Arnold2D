@@ -7,11 +7,9 @@
 
 using namespace Utils;
 
-class Entity
-{
+class Entity {
 public:
-    Entity(const Geometry::Vector2D coordinates, Game* game, int health)
-    {
+    Entity(const Geometry::Vector2D coordinates, Game *game, int health) {
         this->coordinates = coordinates;
         this->game = game;
         this->health = health;
@@ -19,7 +17,7 @@ public:
 
     virtual ~Entity() = default;
 
-    virtual void render(SDL_Renderer* renderer) = 0;
+    virtual void render(SDL_Renderer *renderer) = 0;
 
     virtual void update(double deltaTime) = 0;
 
@@ -27,8 +25,9 @@ public:
 
     Geometry::Vector2D dimensions{};
     Geometry::Vector2D coordinates{};
-    Game* game;
+    Game *game;
 
+protected:
     mutable int health;
 };
 

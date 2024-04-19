@@ -4,10 +4,12 @@
 #pragma once
 
 class Entity;
+
+class Player;
+
 class Map;
 
-namespace Utils::Geometry
-{
+namespace Utils::Geometry {
     struct Vector2D;
 }
 
@@ -24,5 +26,7 @@ namespace Utils::Geometry
 #include "Player.h"
 #include "Enemy.h"
 #include "Juggernaut.h"
+#include "WeaponPickup.h"
+#include "HealthPickup.h"
 
 #endif //ARNOLD_H
