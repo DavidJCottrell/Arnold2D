@@ -7,11 +7,15 @@ class Entity;
 
 class Player;
 
+class Game;
+
 class Map;
 
-namespace Utils::Geometry {
+namespace Utils::Geometry
+{
     struct Vector2D;
 }
+
 
 #include "Constants.h"
 #include "Game.h"
