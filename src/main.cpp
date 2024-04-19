@@ -2,28 +2,23 @@
 #include <random>
 #include <Arnold.h>
 
-int main()
-{
+int main() {
     Game game;
 
     if (!game.init(
-        "A Game Title",
-        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        WINDOW_WIDTH, WINDOW_HEIGHT))
-    {
-        std::cout << "Failed to initialise SDL" << std::endl;
-        return 1;
+            "A Game Title",
+            SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+            WINDOW_WIDTH, WINDOW_HEIGHT)) {
+        throw std::runtime_error("Failed to initialise SDL");
     }
 
-    auto* map = new Map(game.getRenderer());
+    auto *map = new Map(game.getRenderer());
 
     game.map = map;
 
-
     game.addEntity<Player>(Player({400, 300}, &game));
 
-    while (game.getIsRunning())
-    {
+    while (game.getIsRunning()) {
         game.handleEvents();
         game.update();
         game.render();
