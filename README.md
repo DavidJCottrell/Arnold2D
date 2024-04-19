@@ -2,6 +2,10 @@
 
 ## Dependencies
 
+### Build Tools:
+
+`sudo apt install build-essential cmake`
+
 ### ZeroMQ:
 
 `sudo apt-get install libczmq-dev`
