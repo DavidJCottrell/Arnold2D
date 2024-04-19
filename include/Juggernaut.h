@@ -18,6 +18,8 @@ public:
 private:
     const int healthCapacity = 80;
     const float movementSpeed = 70.0f;
+    SDL_Texture *enemyTex = nullptr;
+
 };
 
 

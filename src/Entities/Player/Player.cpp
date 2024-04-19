@@ -102,7 +102,7 @@ bool Player::isCollidingWithWall(Vector2D potentialCoordinates) const {
     const Map::pointer_to_arrays map = game->map->getMap();
     for (int row = 0; row < 20; row++) {
         for (int column = 0; column < 25; column++) {
-            if (map[row][column].tileType == water) {
+            if (map[row][column].tileType == wall) {
                 if (isColliding(potentialCoordinates, dimensions, map[row][column].coordinates,
                                 map[row][column].dimensions)) {
                     return true;

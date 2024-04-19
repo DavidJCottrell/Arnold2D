@@ -7,35 +7,35 @@
 
 using namespace Utils::Geometry;
 
-enum TileType { dirt = 0, water = 1, grass = 2 };
+enum TileType {
+    ground, wall
+};
 
-struct Tile
-{
+struct Tile {
     TileType tileType;
     Vector2D dimensions;
     Vector2D coordinates;
 };
 
-class Map
-{
+class Map {
 public:
-    explicit Map(SDL_Renderer* renderer);
+    explicit Map(SDL_Renderer *renderer);
 
     ~Map();
 
     void LoadMap();
 
-    void DrawMap(SDL_Renderer* renderer) const;
+    void DrawMap(SDL_Renderer *renderer) const;
 
     typedef Tile (*pointer_to_arrays)[25];
+
     pointer_to_arrays getMap() { return map; }
 
 private:
     SDL_Rect src{};
 
-    SDL_Texture* dirt;
-    SDL_Texture* grass;
-    SDL_Texture* water;
+    SDL_Texture *floorTex;
+    SDL_Texture *wallTex;
 
     Tile map[20][25]{};
 };

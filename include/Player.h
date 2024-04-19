@@ -20,7 +20,7 @@ public:
         laserRifleSound = Audio::loadMedia(("../assets/audio/laser.mp3"));
         shotgunSound = Audio::loadMedia(("../assets/audio/shotgun.mp3"));
         uziSound = Audio::loadMedia(("../assets/audio/uzi.wav"));
-        playerTex = TextureManager::LoadTexture("../assets/sprites/characters/player.png", game->getRenderer());
+        playerTex = TextureManager::LoadTexture("/sprites/characters/player.png", game->getRenderer());
     }
 
     void registerMovementKey(SDL_Keycode key, bool isHeld);

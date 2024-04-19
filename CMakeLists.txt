@@ -8,6 +8,8 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 find_package(SDL2 REQUIRED)
 find_library(ZeroMQ czmq REQUIRED)
 
+file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
+
 add_executable(arnold src/main.cpp
         src/Engine/Game.cpp
         include/Game.h

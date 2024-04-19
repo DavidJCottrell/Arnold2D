@@ -5,15 +5,19 @@ void Juggernaut::takeDamage() const {
 }
 
 void Juggernaut::render(SDL_Renderer *renderer) {
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
-    const SDL_Rect enemyRect = {
+    const SDL_Rect src{0, 0, 32, 32};
+    const SDL_Rect dest{
             static_cast<int>(coordinates.x),
             static_cast<int>(coordinates.y),
             static_cast<int>(dimensions.x),
             static_cast<int>(dimensions.y)
     };
-    SDL_RenderFillRect(renderer, &enemyRect);
+    if (enemyTex == nullptr) {
+        enemyTex = TextureManager::LoadTexture("/sprites/juggernaut.png", renderer);
+    }
+
+    TextureManager::DrawTexture(enemyTex, renderer, src, dest);
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 10);
     const SDL_Rect healthBarBackground = {
